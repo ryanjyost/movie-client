@@ -15,7 +15,7 @@ class App extends Component {
       this.setState({ accessToken });
       if (accessToken) {
         axios
-          .post("http://localhost:8000/login", {
+          .post("https://predict-movies-prod.herokuapp.com/login", {
             access_token: accessToken
           })
           .then(response => {

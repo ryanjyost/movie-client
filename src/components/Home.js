@@ -23,7 +23,7 @@ class Home extends Component {
       let accessToken = window.location.search.replace("?access_token=", "");
 
       axios
-        .post("http://localhost:8000/users/login", {
+        .post("https://predict-movies-prod.herokuapp.com/users/login", {
           access_token: accessToken
         })
         .then(response => {
@@ -42,7 +42,7 @@ class Home extends Component {
       // get prev auth user
       let userId = window.localStorage.getItem("userId");
       axios
-        .post(`http://localhost:8000/users/${userId}`)
+        .post(`https://predict-movies-prod.herokuapp.com/users/${userId}`)
         .then(response => {
           window.localStorage.setItem("userId", response.data.user._id);
           this.setState({
@@ -56,7 +56,7 @@ class Home extends Component {
     }
 
     axios
-      .get("http://localhost:8000/movies")
+      .get("https://predict-movies-prod.herokuapp.com/movies")
       .then(response => {
         console.log(response.data);
         this.setState({ movies: response.data.movies });
@@ -64,7 +64,7 @@ class Home extends Component {
       .catch(e => console.log(e));
 
     // axios
-    //   .get("http://localhost:8000/groupme/users")
+    //   .get("https://predict-movies-prod.herokuapp.com/groupme/users")
     //   .then(response => {
     //     console.log(response.data);
     //     this.setState({ movies: response.data.movies });
@@ -98,10 +98,13 @@ class Home extends Component {
     let moviesBeingEdited = { ...this.state.moviesBeingEdited };
 
     axios
-      .post(`http://localhost:8000/movies/predict/${movieId}`, {
-        userId: this.state.user._id,
-        prediction: this.state.moviesBeingEdited[movieId]
-      })
+      .post(
+        `https://predict-movies-prod.herokuapp.com/movies/predict/${movieId}`,
+        {
+          userId: this.state.user._id,
+          prediction: this.state.moviesBeingEdited[movieId]
+        }
+      )
       .then(response => {
         delete moviesBeingEdited[movieId];
         this.setState({
@@ -365,7 +368,7 @@ class Home extends Component {
             borderRadius: 3
           }}
           className={"homeButton"}
-          href={`https://oauth.groupme.com/oauth/authorize?client_id=3OwX3c4j3w7hJJpF3KC2YepqfoKz91Y4WI9zoXY5ZCT08iHq`}
+          href={`https://oauth.groupme.com/oauth/authorize?client_id=m35GLCvXufGcG7vL8243ZXNaZ8hGs9QcUoIFiNFSmeXRw3Ba`}
         >
           Sign in with GroupMe
         </a>

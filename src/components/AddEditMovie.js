@@ -19,7 +19,7 @@ class AddEditMovie extends Component {
 
   add() {
     axios
-      .post("http://localhost:8000/movies/add", {
+      .post("https://predict-movies-prod.herokuapp.com/movies/add", {
         title: this.state.title,
         title_lower: this.state.title.toLowerCase(),
         summary: this.state.summary,

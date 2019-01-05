@@ -12,7 +12,7 @@ class Join extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:8000/groupme/users")
+      .get("https://predict-movies-prod.herokuapp.com/groupme/users")
       .then(response => {
         console.log(response.data);
         this.setState({ movies: response.data.movies });
