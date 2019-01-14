@@ -73,7 +73,7 @@ class Home extends Component {
               borderRadius: 3
             }}
             className={"homeButton"}
-            href={devURL}
+            href={url}
           >
             Sign in with GroupMe
           </a>
