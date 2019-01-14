@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4e571adb-78d9-4542-90cc-685e52b75e46" name="Default" comment="tons of updates">
+    <list default="true" id="4e571adb-78d9-4542-90cc-685e52b75e46" name="Default" comment="save user">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pages/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,35 +23,45 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="site.webmanifest" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build/site.webmanifest">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="manifest.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build/manifest.json">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="asset-manifest.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build/asset-manifest.json">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="static.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static.json">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+            <state relative-caret-position="182">
+              <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Home.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Home.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/pages/Home.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="72" column="29" lean-forward="true" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
+            <state relative-caret-position="276">
+              <caret line="27" column="10" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/App.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="166">
+              <caret line="70" column="12" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-299" />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="222">
+              <caret line="35" column="9" lean-forward="true" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -136,18 +146,18 @@
         <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/src/components/pages/AddEditMovie.js" />
         <option value="$PROJECT_DIR$/src/components/Join.js" />
-        <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/components/pages/Admin.js" />
         <option value="$PROJECT_DIR$/src/index.css" />
         <option value="$PROJECT_DIR$/src/components/pages/Upcoming.js" />
-        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/components/pages/Purgatory.js" />
         <option value="$PROJECT_DIR$/src/components/pages/PastPredictions.js" />
         <option value="$PROJECT_DIR$/src/components/MovieTable.js" />
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/src/components/pages/Home.js" />
+        <option value="$PROJECT_DIR$/src/App.js" />
+        <option value="$PROJECT_DIR$/public/index.html" />
       </list>
     </option>
   </component>
@@ -190,6 +200,11 @@
               <item name="movie-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="movie-client" type="462c0819:PsiDirectoryNode" />
               <item name="build" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="movie-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="movie-client" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="movie-client" type="b2602c69:ProjectViewProjectNode" />
@@ -264,7 +279,7 @@
       <workItem from="1547008738410" duration="4039000" />
       <workItem from="1547251371585" duration="196000" />
       <workItem from="1547259635853" duration="2688000" />
-      <workItem from="1547506586108" duration="24000" />
+      <workItem from="1547506586108" duration="1265000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1546664228234</created>
@@ -294,11 +309,25 @@
       <option name="project" value="LOCAL" />
       <updated>1547089449745</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="prod link">
+      <created>1547506619667</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1547506619667</updated>
+    </task>
+    <task id="LOCAL-00006" summary="save user">
+      <created>1547507232956</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1547507232956</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="73626000" />
+    <option name="totallyTimeSpent" value="74867000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1280" height="778" extended-state="6" />
@@ -311,7 +340,7 @@
       <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32781956" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2657512" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2657512" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -337,7 +366,9 @@
     <MESSAGE value="change urls" />
     <MESSAGE value="delete old files" />
     <MESSAGE value="tons of updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="tons of updates" />
+    <MESSAGE value="prod link" />
+    <MESSAGE value="save user" />
+    <option name="LAST_COMMIT_MESSAGE" value="save user" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -345,13 +376,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="30" column="18" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -408,6 +432,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3820">
           <caret line="279" column="3" lean-forward="true" selection-start-line="279" selection-start-column="3" selection-end-line="279" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#41#0" />
+            <element signature="n#!!block;n#constructor#0;n#Upcoming#0" />
+            <element signature="e#295#393#0" />
+            <element signature="n#!!block;n#componentDidMount#0;n#Upcoming#0" />
+            <element signature="n#!!block;n#updateVoteInput#0;n#Upcoming#0" />
+            <element signature="n#!!block;n#setAsBeingEdited#0;n#Upcoming#0" />
+            <element signature="n#!!block;n#saveVote#0;n#Upcoming#0" />
+            <element signature="n#!!block;n#youtube_parser#0;n#Upcoming#0" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -436,6 +470,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3820">
           <caret line="279" column="3" lean-forward="true" selection-start-line="279" selection-start-column="3" selection-end-line="279" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#41#0" />
+            <element signature="n#!!block;n#constructor#0;n#Upcoming#0" />
+            <element signature="e#295#393#0" />
+            <element signature="n#!!block;n#componentDidMount#0;n#Upcoming#0" />
+            <element signature="n#!!block;n#updateVoteInput#0;n#Upcoming#0" />
+            <element signature="n#!!block;n#setAsBeingEdited#0;n#Upcoming#0" />
+            <element signature="n#!!block;n#saveVote#0;n#Upcoming#0" />
+            <element signature="n#!!block;n#youtube_parser#0;n#Upcoming#0" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -577,13 +621,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="53" column="13" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="320">
@@ -612,17 +649,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="27" column="34" lean-forward="true" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/pages/Upcoming.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="560">
           <caret line="279" column="3" selection-start-line="279" selection-start-column="3" selection-end-line="279" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#41#0" />
+            <element signature="n#!!block;n#constructor#0;n#Upcoming#0" />
+            <element signature="e#295#393#0" />
+            <element signature="n#!!block;n#componentDidMount#0;n#Upcoming#0" />
+            <element signature="n#!!block;n#updateVoteInput#0;n#Upcoming#0" />
+            <element signature="n#!!block;n#setAsBeingEdited#0;n#Upcoming#0" />
+            <element signature="n#!!block;n#saveVote#0;n#Upcoming#0" />
+            <element signature="n#!!block;n#youtube_parser#0;n#Upcoming#0" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -637,13 +677,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="5" column="12" lean-forward="true" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-682">
-          <caret line="130" column="41" lean-forward="true" selection-start-line="130" selection-start-column="41" selection-end-line="130" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -663,8 +696,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/pages/Home.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="72" column="29" lean-forward="true" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
+        <state relative-caret-position="276">
+          <caret line="27" column="10" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="23" column="35" selection-start-line="23" selection-start-column="35" selection-end-line="23" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="70" column="12" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-299" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="35" column="9" lean-forward="true" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
         </state>
       </provider>
     </entry>
