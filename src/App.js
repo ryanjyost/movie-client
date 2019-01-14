@@ -74,6 +74,7 @@ class App extends Component {
 
   updateUser(user) {
     this.setState({ user });
+    window.localStorage.setItem("userId", user._id);
   }
 
   render() {
