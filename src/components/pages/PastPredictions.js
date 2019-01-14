@@ -20,7 +20,11 @@ class PastPredictions extends Component {
         }
       )
       .then(response => {
-        const sorted = response.data.movies.sort((a, b) => {
+        const filtered = response.data.movies.filter(movie => {
+          console.log(this.props.user.votes);
+          return movie._id in this.props.user.votes;
+        });
+        const sorted = filtered.sort((a, b) => {
           if (a.releaseDate > b.releaseDate) {
             return -1;
           } else if (a.releaseDate < b.releaseDate) {
@@ -51,8 +55,14 @@ class PastPredictions extends Component {
         }
       }
 
-      if (!total) {
-        return null;
+      if (!numMovies) {
+        return (
+          <div style={{ maxWidth: 500, margin: "auto", padding: 20 }}>
+            Once you've made a prediction and the movie gets an official Rotten
+            Tomatoes Score, the result will show up here along with your average
+            prediction accuracy.
+          </div>
+        );
       } else {
         return (
           <div

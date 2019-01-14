@@ -23,7 +23,7 @@ class Home extends Component {
       let accessToken = window.location.search.replace("?access_token=", "");
 
       axios
-        .post("http://localhost:8000/users/login", {
+        .post("https://predict-movies-prod.herokuapp.com/users/login", {
           access_token: accessToken
         })
         .then(response => {

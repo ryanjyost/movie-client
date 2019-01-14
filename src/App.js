@@ -47,7 +47,7 @@ class App extends Component {
       // get prev auth user
       let userId = window.localStorage.getItem("userId");
       axios
-        .post(`http://localhost:8000/users/${userId}`)
+        .post(`https://predict-movies-prod.herokuapp.com/users/${userId}`)
         .then(response => {
           window.localStorage.setItem("userId", response.data.user._id);
           this.setState({

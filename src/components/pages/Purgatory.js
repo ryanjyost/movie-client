@@ -46,11 +46,11 @@ class Purgatory extends Component {
           padding: "30px 10px"
         }}
       >
-        <h5 style={{ textAlign: "center" }}>
+        <div style={{ maxWidth: 500, margin: "auto", padding: 20 }}>
           These movies don't have a Rotten Tomatoes Score yet, but are close to
           the release date and closed to any more predictions.{" "}
           <strong>See your locked-in predictions below.</strong>{" "}
-        </h5>
+        </div>
         <MovieTable movies={this.state.movies} user={this.props.user} />
       </div>
     );

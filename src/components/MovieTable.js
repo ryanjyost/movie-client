@@ -73,6 +73,7 @@ const MovieTable = ({ movies, user }) => {
       {movies.map(movie => {
         return (
           <div
+            key={movie._id}
             style={{
               width: "100%",
               margin: "20px 0px",
