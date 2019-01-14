@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import YouTube from "react-youtube";
-import moment from "moment";
-import { Button, FormGroup, FormControl } from "react-bootstrap";
 
 class Join extends Component {
   constructor(props) {
@@ -12,7 +9,10 @@ class Join extends Component {
 
   componentDidMount() {
     axios
-      .get("https://predict-movies-prod.herokuapp.com/groupme/users")
+      .get(
+        `${process.env.REACT_APP_API_URL ||
+          "https://predict-movies-prod.herokuapp.com"}/groupme/users`
+      )
       .then(response => {
         console.log(response.data);
         this.setState({ movies: response.data.movies });

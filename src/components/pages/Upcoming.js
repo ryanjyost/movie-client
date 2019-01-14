@@ -4,67 +4,45 @@ import YouTube from "react-youtube";
 import moment from "moment";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 
-class Home extends Component {
+class Upcoming extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: null,
-      user: null,
       movies: [],
-      votes: {},
+      // votes: {},
       moviesBeingEdited: {},
-      savingVote: false,
-      isStranger: false
+      savingVote: false
     };
   }
 
   componentDidMount() {
-    if (window.location.search) {
-      let accessToken = window.location.search.replace("?access_token=", "");
-
-      axios
-        .post("https://predict-movies-prod.herokuapp.com/users/login", {
-          access_token: accessToken
-        })
-        .then(response => {
-          this.setState({
-            user: response.data.user,
-            votes: response.data.user.votes || {},
-            isStranger: !response.data.isMember
-          });
-
-          if (response.data.isMember) {
-            window.localStorage.setItem("userId", response.data.user._id);
-          }
-        })
-        .catch(e => console.log(e));
-    } else if (window.localStorage.getItem("userId")) {
-      // get prev auth user
-      let userId = window.localStorage.getItem("userId");
-      axios
-        .post(`https://predict-movies-prod.herokuapp.com/users/${userId}`)
-        .then(response => {
-          window.localStorage.setItem("userId", response.data.user._id);
-          this.setState({
-            user: response.data.user,
-            votes: response.data.user.votes || {}
-          });
-        })
-        .catch(e => console.log(e));
-    } else {
-      window.localStorage.setItem("userId", "");
-    }
-
     axios
-      .get("https://predict-movies-prod.herokuapp.com/movies")
+      .get(
+        `${process.env.REACT_APP_API_URL ||
+          "https://predict-movies-prod.herokuapp.com"}/movies`,
+        {
+          params: { isClosed: 0 }
+        }
+      )
       .then(response => {
-        console.log(response.data);
-        this.setState({ movies: response.data.movies });
+        const sorted = response.data.movies.sort((a, b) => {
+          if (a.releaseDate > b.releaseDate) {
+            return 1;
+          } else if (a.releaseDate < b.releaseDate) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+        this.setState({
+          movies: sorted
+          // votes: this.props.user.votes
+        });
       })
       .catch(e => console.log(e));
 
     // axios
-    //   .get("https://predict-movies-prod.herokuapp.com/groupme/users")
+    //   .get("http://localhost:8000/groupme/users")
     //   .then(response => {
     //     console.log(response.data);
     //     this.setState({ movies: response.data.movies });
@@ -90,7 +68,7 @@ class Home extends Component {
     console.log(movieId);
     let moviesBeingEdited = { ...this.state.moviesBeingEdited };
     moviesBeingEdited[movieId] =
-      this.state.votes[movieId] > -1 ? this.state.votes[movieId] : 50;
+      this.props.user.votes[movieId] > -1 ? this.props.user.votes[movieId] : 50;
     this.setState({ moviesBeingEdited });
   }
 
@@ -98,18 +76,15 @@ class Home extends Component {
     let moviesBeingEdited = { ...this.state.moviesBeingEdited };
 
     axios
-      .post(
-        `https://predict-movies-prod.herokuapp.com/movies/predict/${movieId}`,
-        {
-          userId: this.state.user._id,
-          prediction: this.state.moviesBeingEdited[movieId]
-        }
-      )
+      .post(`${process.env.REACT_APP_API_URL}/movies/predict/${movieId}`, {
+        userId: this.props.user._id,
+        prediction: this.state.moviesBeingEdited[movieId]
+      })
       .then(response => {
         delete moviesBeingEdited[movieId];
+        this.props.updateUser(response.data.user);
         this.setState({
-          user: response.data.user,
-          votes: response.data.user.votes,
+          // votes: response.data.user.votes,
           moviesBeingEdited,
           savingVote: false
         });
@@ -139,13 +114,13 @@ class Home extends Component {
 
       const renderInput = movie => {
         const vote = Number(this.state.moviesBeingEdited[movie._id]);
-        const hasVote = this.state.votes[movie._id] > -1;
+        const hasVote = this.props.user.votes[movie._id] > -1;
         const noMoreVoting = moment().isAfter(moment(movie.releaseDate * 1000));
         const { savingVote } = this.state;
         const isBeingEdited = this.state.moviesBeingEdited[movie._id] > -1;
         const isValidVote = vote > -1 && vote < 101;
 
-        if (isBeingEdited && !noMoreVoting) {
+        if (isBeingEdited) {
           return (
             <div
               style={{
@@ -212,37 +187,36 @@ class Home extends Component {
             >
               {hasVote ? (
                 <div style={{ fontSize: 26, fontWeight: "bold" }}>{`${
-                  this.state.votes[movie._id]
+                  this.props.user.votes[movie._id]
                 }%`}</div>
               ) : null}
 
-              {!noMoreVoting && (
-                <Button
-                  bsStyle={"default"}
-                  disabled={false}
-                  bsSize={"small"}
-                  onClick={() => this.setAsBeingEdited(movie._id)}
-                  style={{
-                    marginLeft: hasVote ? 20 : 0,
-                    display: "flex",
-                    alignItems: "center",
-                    color: !hasVote ? "#fff" : null,
-                    fontWeight: "bold",
-                    backgroundColor: !hasVote ? "#FA320A" : null
-                  }}
-                >
-                  {!hasVote ? (
-                    <span style={{ marginRight: 3 }}>🍿</span>
-                  ) : (
-                    <span style={{ marginRight: 3 }}>👈</span>
-                  )}
-                  {!hasVote ? "Make your prediction" : "Edit your prediction"}
-                </Button>
-              )}
+              <Button
+                bsStyle={"default"}
+                disabled={false}
+                bsSize={"small"}
+                onClick={() => this.setAsBeingEdited(movie._id)}
+                style={{
+                  marginLeft: hasVote ? 20 : 0,
+                  display: "flex",
+                  alignItems: "center",
+                  color: !hasVote ? "#fff" : null,
+                  fontWeight: "bold",
+                  backgroundColor: !hasVote ? "#FA320A" : null
+                }}
+              >
+                {!hasVote ? (
+                  <span style={{ marginRight: 3 }}>🍿</span>
+                ) : (
+                  <span style={{ marginRight: 3 }}>👈</span>
+                )}
+                {!hasVote ? "Make your prediction" : "Edit your prediction"}
+              </Button>
             </div>
           );
         }
       };
+
       return (
         <div
           style={{
@@ -250,9 +224,13 @@ class Home extends Component {
             flexDirection: "column",
             alignItems: "center",
             width: "100%",
-            padding: "50px 20px"
+            padding: "30px 20px"
           }}
         >
+          <h5 style={{ textAlign: "center", fontWeight: "bold" }}>
+            Predict the Rotten Tomatoes Scores for these upcoming movies.
+          </h5>
+          <h5 style={{ margin: "10px 0px 40px 0px" }}>&darr;</h5>
           {this.state.movies.map((movie, i) => {
             return (
               <div
@@ -260,8 +238,10 @@ class Home extends Component {
                 style={{
                   display: "flex",
                   flexWrap: "wrap",
+                  width: "100%",
                   justifyContent: "center",
-                  alignItems: "center"
+                  alignItems: "center",
+                  marginBottom: 50
                 }}
               >
                 {renderVideo(this.youtube_parser(movie.trailer))}
@@ -296,85 +276,8 @@ class Home extends Component {
       );
     };
 
-    if (this.state.isStranger) {
-      return (
-        <div
-          style={{
-            height: "100vh",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center"
-          }}
-        >
-          <h4>
-            Looks like you're not a member of Movie Medium's experimental
-            GroupMe chat.
-          </h4>
-          <p>
-            If you think that's a mistake or are interested in joining Movie
-            Medium, email me at ryanjyost@gmail.com
-          </p>
-          {/*<a*/}
-          {/*style={{*/}
-          {/*margin: "20px 0px 0px 0px",*/}
-          {/*backgroundColor: "#00aff0",*/}
-          {/*color: "#fff",*/}
-          {/*fontWeight: "bold",*/}
-          {/*padding: "10px 20px",*/}
-          {/*textDecoration: "none",*/}
-          {/*borderRadius: 3*/}
-          {/*}}*/}
-          {/*className={"homeButton"}*/}
-          {/*href={`https://oauth.groupme.com/oauth/authorize?client_id=3OwX3c4j3w7hJJpF3KC2YepqfoKz91Y4WI9zoXY5ZCT08iHq`}*/}
-          {/*>*/}
-          {/*Sign in with GroupMe*/}
-          {/*</a>*/}
-        </div>
-      );
-    } else if (this.state.user) {
-      return renderUser();
-    }
-    return (
-      <div
-        style={{
-          height: "100vh",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center"
-        }}
-      >
-        <h1>Movie Medium</h1>
-        <p>
-          Predict{" "}
-          <a target={"_blank"} href="https://www.rottentomatoes.com/">
-            Rotten Tomatoes
-          </a>{" "}
-          scores with friends.
-        </p>
-        <a
-          style={{
-            margin: "20px 0px 0px 0px",
-            backgroundColor: "#00aff0",
-            color: "#fff",
-            fontWeight: "bold",
-            padding: "10px 20px",
-            textDecoration: "none",
-            borderRadius: 3
-          }}
-          className={"homeButton"}
-          href={`https://oauth.groupme.com/oauth/authorize?client_id=m35GLCvXufGcG7vL8243ZXNaZ8hGs9QcUoIFiNFSmeXRw3Ba`}
-        >
-          Sign in with GroupMe
-        </a>
-      </div>
-    );
+    return renderUser();
   }
 }
 
-export default Home;
+export default Upcoming;

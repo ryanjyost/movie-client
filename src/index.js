@@ -1,22 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import Home from "./components/Home";
-import Join from "./components/Join";
-import User from "./components/User";
-import AddEditMovie from "./components/AddEditMovie";
+import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { withRouter } from "react-router";
+
+const AppWithRouter = withRouter(App);
 
 ReactDOM.render(
   <Router>
-    <Switch>
-      <Route path="/" exact component={Home} />
-      <Route path="/user" exact component={Home} />
-      <Route path="/join/:groupId" component={Join} />
-      <Route path="/admin/add-new-movie" exact component={AddEditMovie} />
-      <Route component={Home} />
-    </Switch>
+    <AppWithRouter />
   </Router>,
   document.getElementById("root")
 );

@@ -16,12 +16,13 @@
     "react-datetime": "^2.16.3",
     "react-dom": "^16.7.0",
     "react-router-dom": "^4.3.1",
+    "react-table": "^6.8.6",
     "react-youtube": "^7.8.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "aws s3 sync build/ s3:/staging.moviemedium.io --delete",
+    "deploy-staging": "aws s3 sync build/ s3://staging.moviemedium.io --delete",
     "deploy-prod-dangerous": "aws s3 sync build/ s3://moviemedium.io --delete",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
