@@ -23,9 +23,13 @@ class Home extends Component {
       let accessToken = window.location.search.replace("?access_token=", "");
 
       axios
-        .post("https://predict-movies-prod.herokuapp.com/users/login", {
-          access_token: accessToken
-        })
+        .post(
+          `${process.env.REACT_APP_API_URL ||
+            "https://predict-movies-prod.herokuapp.com"}/users/login`,
+          {
+            access_token: accessToken
+          }
+        )
         .then(response => {
           this.props.updateUser(response.data.user, !response.data.isMember);
           this.setState({
@@ -38,8 +42,6 @@ class Home extends Component {
 
   render() {
     const renderLanding = () => {
-      const devURL =
-        "https://oauth.groupme.com/oauth/authorize?client_id=C9Quth8nYeYdwrokegBdnJvURAGTnfLSSHJxSUVQ0W0OBLAX";
       const url =
         "https://oauth.groupme.com/oauth/authorize?client_id=m35GLCvXufGcG7vL8243ZXNaZ8hGs9QcUoIFiNFSmeXRw3Ba";
       return (
@@ -73,7 +75,7 @@ class Home extends Component {
               borderRadius: 3
             }}
             className={"homeButton"}
-            href={url}
+            href={process.env.REACT_APP_GROUPME_AUTH || url}
           >
             Sign in with GroupMe
           </a>

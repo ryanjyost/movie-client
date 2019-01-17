@@ -14,7 +14,7 @@ const MovieTable = ({ movies, user }) => {
             color: "#fff"
           }}
         >
-          <h6 style={{ color: "rgba(255, 255, 255, 0.6)" }}>prediction</h6>
+          <h6 style={{ color: "rgba(255, 255, 255, 0.6)" }}>your prediction</h6>
           <h4 style={{ margin: "0px 10px 0px 10px", fontWeight: "bold" }}>
             {user.votes[movie._id]}
             <span
