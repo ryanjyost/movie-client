@@ -76,10 +76,14 @@ class Upcoming extends Component {
     let moviesBeingEdited = { ...this.state.moviesBeingEdited };
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/movies/predict/${movieId}`, {
-        userId: this.props.user._id,
-        prediction: this.state.moviesBeingEdited[movieId]
-      })
+      .post(
+        `${process.env.REACT_APP_API_URL ||
+          "https://predict-movies-prod.herokuapp.com"}/movies/predict/${movieId}`,
+        {
+          userId: this.props.user._id,
+          prediction: this.state.moviesBeingEdited[movieId]
+        }
+      )
       .then(response => {
         delete moviesBeingEdited[movieId];
         this.props.updateUser(response.data.user);
