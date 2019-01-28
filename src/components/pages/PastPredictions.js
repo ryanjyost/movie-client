@@ -85,7 +85,7 @@ class PastPredictions extends Component {
                 alignItems: "center"
               }}
             >
-              <strong>{total / numMovies}</strong>
+              <strong>{Number(total / numMovies).toFixed(1)}</strong>
               <span
                 style={{
                   color: "rgba(0, 0, 0, 0.4)",
