@@ -47,18 +47,34 @@ const MovieTable = ({ movies, user }) => {
   };
 
   const renderPrediction = movie => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
-        <h4 style={{ marginRight: 10, opacity: 0.6 }}>Your prediction is</h4>
-        <h3 style={{ fontWeight: "bold" }}>{user.votes[movie._id]}%</h3>
-      </div>
-    );
+    if (!user.votes || !user.votes[movie._id]) {
+      return (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <h4 style={{ marginRight: 10, opacity: 0.6 }}>
+            You didn't predict this movie
+          </h4>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <h4 style={{ marginRight: 10, opacity: 0.6 }}>Your prediction is</h4>
+          <h3 style={{ fontWeight: "bold" }}>{user.votes[movie._id]}%</h3>
+        </div>
+      );
+    }
   };
 
   return (

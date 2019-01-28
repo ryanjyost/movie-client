@@ -21,7 +21,7 @@ class Upcoming extends Component {
         `${process.env.REACT_APP_API_URL ||
           "https://predict-movies-prod.herokuapp.com"}/movies`,
         {
-          params: { isClosed: 0 }
+          params: { isClosed: 0, rtScore: -1 }
         }
       )
       .then(response => {
@@ -65,10 +65,12 @@ class Upcoming extends Component {
   }
 
   setAsBeingEdited(movieId) {
-    console.log(movieId);
     let moviesBeingEdited = { ...this.state.moviesBeingEdited };
-    moviesBeingEdited[movieId] =
-      this.props.user.votes[movieId] > -1 ? this.props.user.votes[movieId] : 50;
+    moviesBeingEdited[movieId] = this.props.user.votes
+      ? this.props.user.votes[movieId] > -1
+        ? this.props.user.votes[movieId]
+        : 50
+      : 50;
     this.setState({ moviesBeingEdited });
   }
 
@@ -118,7 +120,9 @@ class Upcoming extends Component {
 
       const renderInput = movie => {
         const vote = Number(this.state.moviesBeingEdited[movie._id]);
-        const hasVote = this.props.user.votes[movie._id] > -1;
+        const hasVote = this.props.user.votes
+          ? this.props.user.votes[movie._id] > -1
+          : false;
         const noMoreVoting = moment().isAfter(moment(movie.releaseDate * 1000));
         const { savingVote } = this.state;
         const isBeingEdited = this.state.moviesBeingEdited[movie._id] > -1;
