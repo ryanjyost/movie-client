@@ -196,7 +196,23 @@ class App extends Component {
 
           <Route path="/user" exact component={Home} />
           <Route path="/join/:groupId" component={Join} />
-          <Route path="/admin" exact component={Admin} />
+          <Route
+            path="/admin"
+            exact
+            render={props => {
+              if (user && user.isAdmin) {
+                return <Admin />;
+              } else {
+                return renderAuthRoute(
+                  Home,
+                  props,
+                  user,
+                  styles,
+                  this.updateUser.bind(this)
+                );
+              }
+            }}
+          />
           <Route component={Home} />
         </Switch>
       </div>
