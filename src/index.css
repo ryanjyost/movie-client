@@ -3,9 +3,10 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  /*font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",*/
+    /*"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",*/
+    /*sans-serif;*/
+  font-family: 'Source Sans Pro', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -27,4 +28,123 @@ code {
 
 .homeButton:hover {
   box-shadow: 0 3px 6px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.22);
+}
+
+.marvel-device.iphone8{
+  margin-top: 50px;
+  width: calc(100vw - 80px);
+  max-width:375px;
+  height: calc((100vw - 80px) * (667/375) - 2px);
+  max-height: calc(667/375 * 375px);
+}
+
+.topBar {
+  margin-bottom:60px;
+}
+
+#left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media(min-width: 1000px){
+  .marvel-device.iphone8{
+    margin-top: 40px;
+  }
+
+  .topBar {
+    margin-bottom:50px;
+  }
+
+  /*.main {*/
+    /*display:flex;*/
+    /*flex-direction: row;*/
+    /*max-width: 1200px;*/
+    /*width: 100%;*/
+    /*padding: 10px 0px;*/
+    /*align-items: flex-start;*/
+    /*justify-content:center;*/
+    /*margin:auto;*/
+    /*max-height: 100vh;*/
+    /*overflow:hidden;*/
+  /*}*/
+
+  /*.main-reverse {*/
+    /*flex-direction: row-reverse !important;*/
+  /*}*/
+
+
+  /*#left {*/
+    /*width: 50%;*/
+    /*padding-top: 20vh;*/
+    /*display:flex;*/
+    /*flex-direction: column;*/
+    /*text-align:left;*/
+    /*justify-content: center;*/
+    /*align-items: flex-start;*/
+    /*!*justify-content:center;*!*/
+  /*}*/
+
+  /*.leftMain {*/
+    /*padding-top: 20vh;*/
+  /*}*/
+
+  /*.leftMain h1 {*/
+    /*font-size: 40px;*/
+  /*}*/
+
+  /*.right {*/
+    /*width: 50%;*/
+  /*}*/
+
+  h2 {
+    font-weight: 700;
+    line-height: 1.2;
+    font-size: 40px;
+    color: #fff;,
+  text-align:left;
+  }
+
+  .sectionTitle {
+    font-size: 30px;
+  }
+
+  .sectionHeader {
+    margin: 75px 0px 40px 0px;
+    font-size: 40px;
+  }
+
+  ul {
+    margin-top: 0px;
+  }
+
+  li {
+    font-size: 20px;
+    margin:40px 0px !important;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  #mc_embed_signup {
+    padding: 20px 0px;
+  }
+
+  .email {
+    width: 250px;
+    height: 34px;
+  }
+
+
+  #btnTextSpan {
+    display: block;
+    font-size: 16px;
+  }
+
+  #btnArrowSpan {
+    display:none;
+  }
 }

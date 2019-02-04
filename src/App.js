@@ -5,6 +5,7 @@ import Admin from "./components/pages/Admin";
 import Home from "./components/pages/Home";
 import Purgatory from "./components/pages/Purgatory";
 import PastPredictions from "./components/pages/PastPredictions";
+import Onboarding from "./components/pages/Onboarding";
 import Join from "./components/Join";
 import {
   BrowserRouter as Router,
@@ -14,19 +15,20 @@ import {
   Redirect
 } from "react-router-dom";
 
-function renderAuthRoute(Component, props, user, styles, updateUser) {
-  if (user) {
+function renderAuthRoute(Component, props, user, updateUser) {
+  if (!user || !user.accessToken) {
+    return <Home {...props} updateUser={user => updateUser(user)} />;
+  } else if (!user.groups || !user.groups.length) {
     return (
-      <Component
+      <Onboarding
         {...props}
-        styles={styles}
         user={user}
         updateUser={user => updateUser(user)}
       />
     );
   } else {
     return (
-      <Home {...props} styles={styles} updateUser={user => updateUser(user)} />
+      <Component {...props} user={user} updateUser={user => updateUser(user)} />
     );
   }
 }
@@ -82,7 +84,7 @@ class App extends Component {
 
   render() {
     const { user } = this.state;
-    const styles = {};
+    console.log("USER", user);
     const showHeader =
       (this.props.location.pathname === "/upcoming" ||
         this.props.location.pathname === "/purgatory" ||
@@ -140,7 +142,18 @@ class App extends Component {
             path="/"
             exact
             render={props => {
-              if (user) {
+              if (!user || !user.accessToken) {
+                return <Home updateUser={user => this.updateUser(user)} />;
+              } else if (!user.groups || !user.groups.length) {
+                return (
+                  <Redirect
+                    to={{
+                      pathname: "/get-started",
+                      state: { from: props.location }
+                    }}
+                  />
+                );
+              } else {
                 return (
                   <Redirect
                     to={{
@@ -149,8 +162,6 @@ class App extends Component {
                     }}
                   />
                 );
-              } else {
-                return <Home updateUser={user => this.updateUser(user)} />;
               }
             }}
           />
@@ -158,13 +169,7 @@ class App extends Component {
             path="/upcoming"
             exact
             render={props =>
-              renderAuthRoute(
-                Upcoming,
-                props,
-                user,
-                styles,
-                this.updateUser.bind(this)
-              )
+              renderAuthRoute(Upcoming, props, user, this.updateUser.bind(this))
             }
           />
           <Route
@@ -175,7 +180,6 @@ class App extends Component {
                 Purgatory,
                 props,
                 user,
-                styles,
                 this.updateUser.bind(this)
               )
             }
@@ -188,13 +192,18 @@ class App extends Component {
                 PastPredictions,
                 props,
                 user,
-                styles,
                 this.updateUser.bind(this)
               )
             }
           />
+          <Route
+            path="/get-started"
+            exact
+            render={props =>
+              renderAuthRoute(Home, props, user, this.updateUser.bind(this))
+            }
+          />
 
-          <Route path="/user" exact component={Home} />
           <Route path="/join/:groupId" component={Join} />
           <Route
             path="/admin"
@@ -207,13 +216,12 @@ class App extends Component {
                   Home,
                   props,
                   user,
-                  styles,
                   this.updateUser.bind(this)
                 );
               }
             }}
           />
-          <Route component={Home} />
+          {/*<Route component={Home} />*/}
         </Switch>
       </div>
     );

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import YouTube from "react-youtube";
-import moment from "moment";
-import { Button, FormGroup, FormControl } from "react-bootstrap";
+import withStyles from "../../lib/withStyles";
 
 class Home extends Component {
   constructor(props) {
@@ -31,7 +29,11 @@ class Home extends Component {
           }
         )
         .then(response => {
-          this.props.updateUser(response.data.user, !response.data.isMember);
+          console.log("HEY!!!!!", response.data.user, accessToken);
+          this.props.updateUser(
+            { ...response.data.user, ...{ accessToken } },
+            !response.data.isMember
+          );
           this.setState({
             votes: response.data.user.votes || {}
           });
@@ -41,50 +43,118 @@ class Home extends Component {
   }
 
   render() {
+    const { styles } = this.props;
+
     const renderLanding = () => {
       const url =
         "https://oauth.groupme.com/oauth/authorize?client_id=m35GLCvXufGcG7vL8243ZXNaZ8hGs9QcUoIFiNFSmeXRw3Ba";
       return (
         <div
           style={{
-            height: "100vh",
             width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center"
+            textAlign: "center",
+            backgroundColor: "#FA320A",
+            padding: "0px 0px 20px 0px",
+            overflow: "hidden",
+            boxSizing: "border-box"
           }}
         >
-          <h1>Movie Medium</h1>
-          <p>
-            Predict{" "}
-            <a target={"_blank"} href="https://www.rottentomatoes.com/">
-              Rotten Tomatoes
-            </a>{" "}
-            scores with friends.
-          </p>
-          <a
+          <div
+            className={"topBar"}
             style={{
-              margin: "20px 0px 0px 0px",
-              backgroundColor: "#00aff0",
-              color: "#fff",
-              fontWeight: "bold",
-              padding: "10px 20px",
-              textDecoration: "none",
-              borderRadius: 3
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: 20
             }}
-            className={"homeButton"}
-            href={process.env.REACT_APP_GROUPME_AUTH || url}
           >
-            Sign in with GroupMe
-          </a>
+            <div
+              style={{
+                color: styles.white(),
+                fontWeight: "bold",
+                fontSize: 20
+              }}
+            >
+              Movie Medium
+            </div>
+            <a
+              style={{
+                margin: "0px 0px 0px 0px",
+                backgroundColor: "#fff",
+                color: styles.red(),
+                fontWeight: "bold",
+                padding: "4px 10px",
+                textDecoration: "none",
+                borderRadius: 3
+              }}
+              href={process.env.REACT_APP_GROUPME_AUTH || url}
+            >
+              Sign in
+            </a>
+          </div>
+
+          <div className="main">
+            <div id={"left"}>
+              <h2 style={{ color: styles.white(0.95), fontWeight: "bold" }}>
+                Predict{" "}
+                <a
+                  target={"_blank"}
+                  href="https://www.rottentomatoes.com/"
+                  style={{ color: "#fff" }}
+                >
+                  Rotten Tomatoes
+                </a>
+                <br />
+                scores with friends
+              </h2>
+              <a
+                style={{
+                  margin: "20px 0px 0px 0px",
+                  backgroundColor: "#fff",
+                  color: styles.red(1),
+                  fontWeight: "bold",
+                  padding: "10px 20px",
+                  textDecoration: "none",
+                  borderRadius: 3,
+                  fontSize: 16
+                }}
+                className={"homeButton"}
+                href={process.env.REACT_APP_GROUPME_AUTH || url}
+              >
+                Start playing in GroupMe
+              </a>
+            </div>
+
+            <div id={"right"}>
+              <div className="marvel-device iphone8 silver">
+                <div className="top-bar" />
+                <div className="sleep" />
+                <div className="volume" />
+                <div className="camera" />
+                {/*<div className="sensor" />*/}
+                <div className="speaker" />
+                <div className="screen">
+                  <img src="preview.jpeg" width="100%" />
+                </div>
+                <div className="home" />
+                <div className="bottom-bar" />
+              </div>
+            </div>
+          </div>
         </div>
       );
     };
 
-    return renderLanding();
+    return (
+      <div>
+        {renderLanding()}
+        <div style={{ backgroundColor: styles.black(0.02), height: "100vh" }}>
+          hey
+        </div>
+      </div>
+    );
   }
 }
 
-export default Home;
+export default withStyles(Home);
