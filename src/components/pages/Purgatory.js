@@ -47,7 +47,7 @@ class Purgatory extends Component {
         }}
       >
         <div style={{ maxWidth: 500, margin: "auto", padding: 20 }}>
-          These movies don't have a Rotten Tomatoes Score yet, but are close to
+          These movies don't have a Rotten Tomatoes® Score yet, but are close to
           the release date and closed to any more predictions.{" "}
           <strong>See your locked-in predictions below.</strong>{" "}
         </div>

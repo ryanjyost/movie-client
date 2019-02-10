@@ -14,21 +14,36 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+import withStyles from "./lib/withStyles";
 
-function renderAuthRoute(Component, props, user, updateUser) {
-  if (!user || !user.accessToken) {
-    return <Home {...props} updateUser={user => updateUser(user)} />;
-  } else if (!user.groups || !user.groups.length) {
+function renderAuthRoute(Component, props, user, updateUser, styles) {
+  console.log("RENDER", user);
+  if (user && (user.groups ? user.groups.length : false)) {
+    return (
+      <Component
+        {...props}
+        user={user}
+        updateUser={user => updateUser(user)}
+        styles={styles}
+      />
+    );
+  } else if (user && user.accessToken) {
     return (
       <Onboarding
         {...props}
         user={user}
         updateUser={user => updateUser(user)}
+        styles={styles}
       />
     );
   } else {
     return (
-      <Component {...props} user={user} updateUser={user => updateUser(user)} />
+      <Home
+        {...props}
+        user={user}
+        updateUser={user => updateUser(user)}
+        styles={styles}
+      />
     );
   }
 }
@@ -61,8 +76,8 @@ class App extends Component {
         })
         .catch(e => console.log(e));
     }
-    //   if (window.location.search) {
-    //     let accessToken = window.location.search.replace("?access_token=", "");
+    //   if (window.pathname.search) {
+    //     let accessToken = window.pathname.search.replace("?access_token=", "");
     //     this.setState({ accessToken });
     //     if (accessToken) {
     //       axios
@@ -84,30 +99,40 @@ class App extends Component {
 
   render() {
     const { user } = this.state;
-    console.log("USER", user);
-    const showHeader =
-      (this.props.location.pathname === "/upcoming" ||
-        this.props.location.pathname === "/purgatory" ||
-        this.props.location.pathname === "/past") &&
+    const { styles } = this.props;
+    const pathname = this.props.location.pathname;
+    const isApp = user && pathname !== "/";
+    const showPredictionMenu =
+      (pathname === "/upcoming" ||
+        pathname === "/purgatory" ||
+        pathname === "/past") &&
       user;
 
-    const linkStyle = {
-      margin: "0px 10px",
-      fontSize: 16,
-      flex: 0.32,
-      textAlign: "center"
-    };
-
     const renderLink = (link, label) => {
-      const location = this.props.location.pathname;
+      const isActive = pathname === link;
+
+      const linkStyle = {
+        fontSize: 12,
+        flex: 1,
+        justifyContent: "center",
+        display: "flex",
+        alignItems: "center"
+      };
+
       return (
         <Link
           to={link}
           style={{
             ...linkStyle,
             ...{
-              fontWeight: location === link ? "bold" : "normal",
-              textDecoration: location === link ? "underline" : null
+              fontWeight: "bold",
+              backgroundColor: !isActive ? styles.white() : styles.primary(1),
+              color: !isActive ? styles.primary() : styles.white(),
+              textDecoration: "none",
+              borderLeft:
+                link === "/purgatory" ? `1px solid ${styles.primary(1)}` : null,
+              borderRight:
+                link === "/purgatory" ? `1px solid ${styles.primary(1)}` : null
             }
           }}
         >
@@ -116,62 +141,106 @@ class App extends Component {
       );
     };
 
-    if (!this.state.didMount) {
-      return null;
-    }
-    return (
-      <div style={{ padding: showHeader ? "50px 0px" : 0 }}>
-        {showHeader ? (
-          <header
+    const renderAppHeader = () => {
+      return (
+        <div
+          style={{
+            height: styles.appHeaderHeight,
+            width: "100%",
+            backgroundColor: styles.primary(),
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: styles.white(),
+            fontSize: 16,
+            fontWeight: "bold"
+          }}
+        >
+          Movie Medium
+        </div>
+      );
+    };
+
+    const renderPredictionMenu = () => {
+      return (
+        <div
+          style={{
+            width: "100%",
+            padding: "10px 0px",
+            backgroundColor: styles.white(),
+            borderBottom: `1px solid ${styles.black(0.1)}`
+          }}
+        >
+          <div
+            className={"toggleButtons"}
             style={{
               display: "flex",
               justifyContent: "center",
-              width: "100%",
+              width: "90%",
               margin: "auto",
               maxWidth: 500,
-              alignItems: "center"
+              alignItems: "stretch",
+              border: `1px solid ${styles.primary(1)}`,
+              // position: "fixed",
+              // bottom: 0,
+              height: styles.predictionMenuHeight,
+              backgroundColor: styles.white()
+              // borderTop: `1px solid ${styles.black(0.1)}`
             }}
           >
             {renderLink("/upcoming", "Upcoming")}
             {renderLink("/purgatory", " Purgatory")}
             {renderLink("/past", "Past")}
-          </header>
-        ) : null}
+          </div>
+        </div>
+      );
+    };
+
+    if (!this.state.didMount) {
+      return null;
+    }
+    return (
+      <div
+        style={{
+          padding: 0,
+          display: "relative",
+          width: "100%"
+        }}
+      >
+        <div style={{ position: "fixed", top: 0, width: "100%", zIndex: 1 }}>
+          {isApp && renderAppHeader()}
+          {showPredictionMenu ? renderPredictionMenu() : null}
+        </div>
         <Switch>
+          {/* HOME */}
           <Route
             path="/"
             exact
-            render={props => {
-              if (!user || !user.accessToken) {
-                return <Home updateUser={user => this.updateUser(user)} />;
-              } else if (!user.groups || !user.groups.length) {
-                return (
-                  <Redirect
-                    to={{
-                      pathname: "/get-started",
-                      state: { from: props.location }
-                    }}
-                  />
-                );
-              } else {
-                return (
-                  <Redirect
-                    to={{
-                      pathname: "/upcoming",
-                      state: { from: props.location }
-                    }}
-                  />
-                );
-              }
-            }}
+            render={props => (
+              <Home
+                user={user}
+                updateUser={user => this.updateUser(user)}
+                styles={styles}
+              />
+            )}
           />
+
+          {/* UPCOMING */}
           <Route
             path="/upcoming"
             exact
             render={props =>
-              renderAuthRoute(Upcoming, props, user, this.updateUser.bind(this))
+              renderAuthRoute(
+                Upcoming,
+                props,
+                user,
+                this.updateUser.bind(this),
+                styles
+              )
             }
           />
+
+          {/* PURGATORY */}
           <Route
             path="/purgatory"
             exact
@@ -184,6 +253,8 @@ class App extends Component {
               )
             }
           />
+
+          {/* PAST */}
           <Route
             path="/past"
             exact
@@ -196,6 +267,8 @@ class App extends Component {
               )
             }
           />
+
+          {/* ONBOARDING */}
           <Route
             path="/get-started"
             exact
@@ -204,7 +277,9 @@ class App extends Component {
             }
           />
 
-          <Route path="/join/:groupId" component={Join} />
+          {/*<Route path="/join/:groupId" component={Join} />*/}
+
+          {/* ADMIN */}
           <Route
             path="/admin"
             exact
@@ -216,16 +291,21 @@ class App extends Component {
                   Home,
                   props,
                   user,
-                  this.updateUser.bind(this)
+                  this.updateUser.bind(this),
+                  styles
                 );
               }
             }}
           />
-          {/*<Route component={Home} />*/}
+          <Route
+            render={props => (
+              <Home user={user} updateUser={user => this.updateUser(user)} />
+            )}
+          />
         </Switch>
       </div>
     );
   }
 }
 
-export default App;
+export default withStyles(App);

@@ -31,9 +31,13 @@ const withStyles = Comp => {
 
       const styles = {
         windowWidth,
+        isWide: windowWidth > 768,
+        predictionMenuHeight: 26,
+        appHeaderHeight: 40,
         white: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-        red: (opacity = 1) => `rgba(250, 50, 10, ${opacity})`
+        primary: (opacity = 1) => `rgba(85, 88, 255, ${opacity})`,
+        secondary: (opacity = 1) => `rgba(255, 99, 99, ${opacity})`
       };
 
       return <Comp styles={styles} {...this.props} />;

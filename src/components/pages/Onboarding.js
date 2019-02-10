@@ -65,7 +65,7 @@ class Onboarding extends Component {
           flexDirection: "column",
           alignItems: "stretch",
           padding: "50px 20px",
-          backgroundColor: styles.red(1),
+          backgroundColor: styles.primary(1),
           minHeight: "100vh",
           maxWidth: 500,
           margin: "auto"

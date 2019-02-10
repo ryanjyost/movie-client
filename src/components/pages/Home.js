@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import withStyles from "../../lib/withStyles";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
   constructor(props) {
@@ -29,11 +30,7 @@ class Home extends Component {
           }
         )
         .then(response => {
-          console.log("HEY!!!!!", response.data.user, accessToken);
-          this.props.updateUser(
-            { ...response.data.user, ...{ accessToken } },
-            !response.data.isMember
-          );
+          this.props.updateUser({ ...response.data.user, ...{ accessToken } });
           this.setState({
             votes: response.data.user.votes || {}
           });
@@ -43,17 +40,28 @@ class Home extends Component {
   }
 
   render() {
-    const { styles } = this.props;
+    const { styles, user } = this.props;
 
     const renderLanding = () => {
       const url =
         "https://oauth.groupme.com/oauth/authorize?client_id=m35GLCvXufGcG7vL8243ZXNaZ8hGs9QcUoIFiNFSmeXRw3Ba";
+
+      const signInBtnStyle = {
+        margin: "0px 0px 0px 0px",
+        backgroundColor: styles.secondary(),
+        color: "#fff",
+        fontWeight: "bold",
+        padding: "4px 10px",
+        textDecoration: "none",
+        borderRadius: 3
+      };
+
       return (
         <div
           style={{
             width: "100%",
             textAlign: "center",
-            backgroundColor: "#FA320A",
+            backgroundColor: styles.primary(),
             padding: "0px 0px 20px 0px",
             overflow: "hidden",
             boxSizing: "border-box"
@@ -78,20 +86,23 @@ class Home extends Component {
             >
               Movie Medium
             </div>
-            <a
-              style={{
-                margin: "0px 0px 0px 0px",
-                backgroundColor: "#fff",
-                color: styles.red(),
-                fontWeight: "bold",
-                padding: "4px 10px",
-                textDecoration: "none",
-                borderRadius: 3
-              }}
-              href={process.env.REACT_APP_GROUPME_AUTH || url}
-            >
-              Sign in
-            </a>
+            {user ? (
+              <Link
+                to={"/upcoming"}
+                style={signInBtnStyle}
+                className={"hoverBtn"}
+              >
+                Sign In
+              </Link>
+            ) : (
+              <a
+                style={signInBtnStyle}
+                className={"hoverBtn"}
+                href={process.env.REACT_APP_GROUPME_AUTH || url}
+              >
+                Sign in
+              </a>
+            )}
           </div>
 
           <div className="main">
@@ -103,7 +114,7 @@ class Home extends Component {
                   href="https://www.rottentomatoes.com/"
                   style={{ color: "#fff" }}
                 >
-                  Rotten Tomatoes
+                  Rotten Tomatoes®
                 </a>
                 <br />
                 scores with friends
@@ -111,19 +122,34 @@ class Home extends Component {
               <a
                 style={{
                   margin: "20px 0px 0px 0px",
-                  backgroundColor: "#fff",
-                  color: styles.red(1),
+                  backgroundColor: styles.secondary(),
+                  color: "#fff",
                   fontWeight: "bold",
                   padding: "10px 20px",
                   textDecoration: "none",
                   borderRadius: 3,
                   fontSize: 16
                 }}
-                className={"homeButton"}
+                className={"hoverBtn"}
                 href={process.env.REACT_APP_GROUPME_AUTH || url}
               >
                 Start playing in GroupMe
               </a>
+              <div
+                style={{
+                  textAlign: "center",
+                  paddingTop: 20,
+                  color: styles.white(0.5)
+                }}
+              >
+                Not endorsed by{" "}
+                <a
+                  style={{ color: styles.white(0.5) }}
+                  href="https://www.rottentomatoes.com/"
+                >
+                  Rotten Tomatoes®
+                </a>
+              </div>
             </div>
 
             <div id={"right"}>

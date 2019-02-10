@@ -66,7 +66,6 @@ class Admin extends Component {
           "https://predict-movies-prod.herokuapp.com"}/movies/add`,
         {
           title: this.state.title,
-          title_lower: this.state.title.toLowerCase(),
           summary: this.state.summary,
           trailer: this.state.trailer,
           rtLink: this.state.rtLink,

@@ -99,7 +99,7 @@ class PastPredictions extends Component {
             <h5 style={{ opacity: 0.8 }}>
               off from the actual{" "}
               <a target={"_blank"} href="https://www.rottentomatoes.com/about">
-                Rotten Tomatoes Score
+                Rotten Tomatoes® Score
               </a>.
             </h5>
           </div>
