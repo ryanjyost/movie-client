@@ -101,7 +101,7 @@ const TermsOfUse = ({ styles, history }) => {
             <p>
               Your privacy is important to us. It is Movie Medium's policy to
               respect your privacy regarding any information we may collect from
-              you across our website, <Link to="/">http://moviemedium.io</Link>,
+              you across our website, <Link to="/">https://moviemedium.io</Link>,
               and other sites we own and operate.
             </p>
             <p>
