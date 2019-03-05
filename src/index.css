@@ -13,7 +13,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, ul, li {
   margin: 0px;
 }
 
@@ -21,6 +21,43 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+
+.spinnerContainer {
+  position:relative;
+  width: 150px;
+  height: 150px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinnerImgContainer {
+  position:absolute;
+  padding: 20px;
+  z-index: 10;
+  background-color: rgba(85, 88, 255, 1);
+  border-radius: 50%;
+}
+/* Spinner Circle Rotation */
+.sp-circle {
+  border: 74px rgba(85, 88, 255,1) solid;
+  border-top: 74px rgba(255, 255, 255,1) solid;
+  border-radius: 50%;
+  -webkit-animation: spCircRot 0.8s infinite linear;
+  animation: spCircRot 0.8s infinite linear;
+}
+
+@-webkit-keyframes spCircRot {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(359deg); }
+}
+@keyframes spCircRot {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(359deg); }
+}
+
+
 
 
 .hoverBtn {

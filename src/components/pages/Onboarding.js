@@ -1,39 +1,25 @@
 import React, { Component } from "react";
 import withStyles from "../../lib/withStyles";
+import LoadingScreen from "../../components/LoadingScreen";
 import axios from "axios";
-import Select from "react-select";
-// import "react-select/dist/react-select.css";
+import { FormControl, Button, Checkbox } from "react-bootstrap";
+import { Redirect, Link } from "react-router-dom";
+import Storage from "store";
 
 class Onboarding extends Component {
   constructor(props) {
     super(props);
     this.state = {
       groups: [],
-      selectedGroup: null
+      selectedGroup: null,
+      createdGroup: null,
+      groupName: "Movie Medium",
+      loadingMessage: "Authenticating via GroupMe..."
     };
   }
 
   componentDidMount() {
-    console.log("USER ONBOARD", this.props.user);
-    axios
-      .post(
-        `${process.env.REACT_APP_API_URL ||
-          "https://predict-movies-prod.herokuapp.com"}/groupme/groups`,
-        {
-          access_token: this.props.user.accessToken
-        }
-      )
-      .then(response => {
-        console.log("GROUPS", response);
-
-        let filtered = response.data.groups.filter(group => {
-          console.log(group, this.props.user);
-          return group.creator_user_id === this.props.user.groupmeId;
-        });
-        this.setState({ groups: filtered });
-      })
-      .catch(e => console.log(e));
-
+    Storage.remove("creatingGroup");
     if (!this.props.user._id) {
       axios
         .post(
@@ -47,7 +33,31 @@ class Onboarding extends Component {
           this.props.updateUser(response.data.user);
         })
         .catch(e => console.log(e));
+    } else {
+      this.setState({ loadingMessage: null });
     }
+  }
+
+  createGroup(isExisting) {
+    this.setState({ loadingMessage: "Creating your group..." });
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL ||
+          "https://predict-movies-prod.herokuapp.com"}/groups/create`,
+        {
+          accessToken: this.props.user.accessToken,
+          user: this.props.user
+        }
+      )
+      .then(response => {
+        console.log("the group was created");
+        Storage.set("createdGroup", true);
+        this.setState({
+          createdGroup: response.data.createdGroup
+        });
+        this.props.updateUser(response.data.user);
+      })
+      .catch(e => console.log(e));
   }
 
   render() {
@@ -57,39 +67,94 @@ class Onboarding extends Component {
       return { value: group.id, label: group.name };
     });
 
-    return (
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "stretch",
-          padding: "50px 20px",
-          backgroundColor: styles.primary(1),
-          minHeight: "100vh",
-          maxWidth: 500,
-          margin: "auto"
-        }}
-      >
-        <div>
-          <h2 style={{ color: "#fff", fontWeight: "bold", marginBottom: 5 }}>
-            Start a Movie Medium Group
-          </h2>
-          <p style={{ color: "#fff", marginBottom: 20 }}>
-            As of now, groups of friends play the Movie Medium game through
-            GroupMe. Eventually, we'll add{" "}
-          </p>
-          <h4 style={{ color: styles.white(0.95), margin: "10px 0px" }}>
-            Use an existing GroupMe group
-          </h4>
-          <Select
-            options={options}
-            placeholder={"Select an existing GroupMe group..."}
-            value={this.state.selectedGroup}
-          />
+    const renderCreateGroup = () => {
+      return (
+        <div
+          style={{
+            backgroundColor: styles.primary(1),
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "50px 20px",
+              backgroundColor: styles.primary(1),
+              minHeight: "100vh",
+              maxWidth: 600,
+              margin: "auto"
+            }}
+          >
+            <h3
+              style={{
+                color: "#fff",
+                marginBottom: 0,
+                textAlign: "center",
+                lineHeight: 1.4,
+                fontWeight: "bold"
+              }}
+            >
+              Create a GroupMe chat<br /> that's linked to Movie Medium
+            </h3>
+
+            <Button
+              onClick={() => this.createGroup(false)}
+              style={{
+                margin: "20px 0px 0px 0px",
+                backgroundColor: styles.secondary(),
+                color: "#fff",
+                fontWeight: "bold",
+                padding: "10px 20px",
+                textDecoration: "none",
+                borderRadius: 3,
+                fontSize: 20,
+                border: "none"
+              }}
+              className={"hoverBtn"}
+            >
+              Create my group
+            </Button>
+            <h6
+              style={{
+                textAlign: "center",
+                maxWidth: 400,
+                color: styles.white(0.7),
+                marginTop: 20
+              }}
+            >
+              By creating your new Movie Medium Group and the linked GroupMe
+              chat, you agree to our{" "}
+              <Link style={{ color: "#fff" }} to={"/terms"}>
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link style={{ color: "#fff" }} to={"/privacy"}>
+                Privacy Policy
+              </Link>.
+            </h6>
+          </div>
         </div>
-      </div>
-    );
+      );
+    };
+
+    if (this.state.createdGroup) {
+      return <Redirect to={"/rules"} />;
+    } else if (!this.props.user.accessToken) {
+      return <Redirect to={"/"} />;
+    } else if (this.state.loadingMessage) {
+      return (
+        <LoadingScreen styles={styles} message={this.state.loadingMessage} />
+      );
+    } else {
+      return renderCreateGroup();
+    }
   }
 }
 

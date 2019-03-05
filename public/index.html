@@ -4,11 +4,11 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Movie Medium</title>
-    <meta name="description" content="Predict Rotten Tomatoes® scores with friends." />
+    <meta name="description" content="Predict Rotten Tomatoes scores with friends." />
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:site" content="@ryanjyost"/>
     <meta name="twitter:title" content="Movie Medium"/>
-    <meta name="twitter:description" content="Predict Rotten Tomatoes® scores with friends."/>
+    <meta name="twitter:description" content="Predict Rotten Tomatoes scores with friends."/>
     <meta name="twitter:creator" content="@ryanjyost"/>
     <!-- Twitter Summary card images must be at least 120x120px -->
     <meta name="twitter:image"
@@ -48,11 +48,64 @@
 
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 
+    <style>
 
+      .spinnerContainer {
+        position:relative;
+        width: 150px;
+        height: 150px;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .spinnerImgContainer {
+        position:absolute;
+        padding: 20px;
+        z-index: 10;
+        background-color: rgba(85, 88, 255, 1);
+        border-radius: 50%;
+      }
+      /* Spinner Circle Rotation */
+      .sp-circle {
+        border: 74px rgba(85, 88, 255,1) solid;
+        border-top: 74px rgba(255, 255, 255,1) solid;
+        border-radius: 50%;
+        -webkit-animation: spCircRot 0.8s infinite linear;
+        animation: spCircRot 0.8s infinite linear;
+      }
+
+      @-webkit-keyframes spCircRot {
+        from { -webkit-transform: rotate(0deg); }
+        to { -webkit-transform: rotate(359deg); }
+      }
+      @keyframes spCircRot {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(359deg); }
+      }
+
+    </style>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div style="height: 100vh; width: 100%; display:flex; align-items: center; justify-content: center;
+      background-color: rgba(85, 88, 255, 1);">
+        <div class="spinnerContainer">
+          <div class="sp-circle"></div>
+          <div class="spinnerImgContainer">
+            <img src="android-chrome-512x512.png" width="100px" height="100px" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

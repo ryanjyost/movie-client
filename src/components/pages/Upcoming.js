@@ -3,6 +3,7 @@ import axios from "axios";
 import YouTube from "react-youtube";
 import moment from "moment";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
+import Movie from "../Movie";
 
 class Upcoming extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class Upcoming extends Component {
       movies: [],
       // votes: {},
       moviesBeingEdited: {},
-      savingVote: false
+      savingVote: false,
+      moviePredictionCutoffDate: null
     };
   }
 
@@ -35,7 +37,8 @@ class Upcoming extends Component {
           }
         });
         this.setState({
-          movies: sorted
+          movies: sorted,
+          moviePredictionCutoffDate: response.data.moviePredictionCutoffDate
           // votes: this.props.user.votes
         });
       })
@@ -110,169 +113,6 @@ class Upcoming extends Component {
 
   render() {
     const { styles } = this.props;
-    const renderVideo = video => {
-      const width = Math.min(styles.windowWidth, 500);
-      const opts = {
-        height: width * (390 / 640),
-        width: width
-      };
-
-      return (
-        <div
-          style={{
-            height: width * (390 / 640),
-            width: width
-          }}
-        >
-          <YouTube videoId={video} opts={opts} />
-        </div>
-      );
-    };
-
-    const renderInput = movie => {
-      const vote =
-        this.state.moviesBeingEdited[movie._id] === ""
-          ? ""
-          : Number(this.state.moviesBeingEdited[movie._id]);
-      const hasVote = this.props.user.votes
-        ? this.props.user.votes[movie._id] > -1
-        : false;
-      const noMoreVoting = moment().isAfter(moment(movie.releaseDate * 1000));
-      const { savingVote } = this.state;
-      const isBeingEdited = this.state.moviesBeingEdited[movie._id] > -1;
-      const isValidVote = !isNaN(vote) && vote > -1 && vote < 101;
-      const daysUntilCutoff = 7;
-
-      if (isBeingEdited) {
-        return (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%",
-              color: "rgba(0,0,0,0.9)"
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center"
-              }}
-            >
-              <FormGroup bsSize="large" style={{ width: 80, marginBottom: 0 }}>
-                <FormControl
-                  onChange={e => {
-                    if (!savingVote) {
-                      this.updateVoteInput(e.target.value, movie._id);
-                    }
-                  }}
-                  readOnly={savingVote}
-                  value={vote}
-                  style={{ fontWeight: "bold" }}
-                  type="number"
-                  placeholder=""
-                />
-              </FormGroup>
-              <div style={{ fontSize: 20, marginLeft: 5 }}>%</div>
-            </div>
-
-            <Button
-              bsStyle={"success"}
-              disabled={!isValidVote || savingVote}
-              bsSize={"small"}
-              style={{
-                marginLeft: 20,
-                display: "flex",
-                alignItems: "center"
-              }}
-              onClick={() => {
-                this.setState({ savingVote: true });
-                this.saveVote(movie._id);
-              }}
-            >
-              {savingVote ? (
-                <span style={{ marginRight: 3 }}>⏳</span>
-              ) : (
-                <span style={{ marginRight: 3 }}>👍</span>
-              )}
-              {savingVote ? "Saving..." : "Save your prediction"}
-            </Button>
-          </div>
-        );
-      } else {
-        return (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%",
-              color: "rgba(0,0,0,0.9)"
-            }}
-          >
-            {hasVote ? (
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  color: styles.primary()
-                }}
-              >
-                <div style={{ fontSize: 26, fontWeight: "bold" }}>{`${
-                  this.props.user.votes[movie._id]
-                }%`}</div>
-                <h6 style={{ marginLeft: 6, opacity: 0.75 }}>prediction</h6>
-              </div>
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center"
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: 26,
-                    fontWeight: "bold",
-                    color: styles.secondary()
-                  }}
-                >{`${daysUntilCutoff}`}</div>
-                <h6 style={{ marginLeft: 6, color: styles.secondary(0.75) }}>
-                  days left to predict
-                </h6>
-              </div>
-            )}
-
-            <Button
-              bsStyle={"default"}
-              disabled={false}
-              bsSize={"small"}
-              className={"hoverBtn"}
-              onClick={() => this.setAsBeingEdited(movie._id)}
-              style={{
-                marginLeft: hasVote ? 20 : 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: !hasVote ? "#fff" : null,
-                fontWeight: "bold",
-                backgroundColor: !hasVote ? styles.secondary() : null,
-                border: "none",
-                width: "auto"
-              }}
-            >
-              {!hasVote ? (
-                <span style={{ marginRight: 3 }}>🍿</span>
-              ) : (
-                <span style={{ marginRight: 3 }}>👈</span>
-              )}
-              {!hasVote ? "Make your prediction" : "Edit your prediction"}
-            </Button>
-          </div>
-        );
-      }
-    };
 
     return (
       <div
@@ -290,85 +130,28 @@ class Upcoming extends Component {
           style={{
             textAlign: "center",
             // fontWeight: "bold",
-            color: styles.primary(0.4)
+            color: styles.primary(0.7)
           }}
         >
-          Predict the Rotten Tomatoes® Scores of upcoming movies
+          Predict the Rotten Tomatoes Scores of upcoming movies
         </h5>
         <h5 style={{ margin: "10px 0px 20px 0px", color: styles.primary(0.4) }}>
           &darr;
         </h5>
         {this.state.movies.map((movie, i) => {
-          const daysUntilRelease = moment
-            .unix(movie.releaseDate)
-            .diff(moment(), "days");
           return (
-            <div
+            <Movie
+              isUpcoming
+              showTrailer
+              allowEdit
+              fetchGroup
               key={i}
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                width: "100%",
-                justifyContent: "center",
-                alignItems: "center",
-                marginBottom: styles.isWide ? 50 : 10,
-                backgroundColor: styles.white(),
-                borderTop: `1px solid ${styles.black(0.05)}`,
-                borderBottom: `1px solid ${styles.black(0.05)}`
-              }}
-            >
-              {renderVideo(this.youtube_parser(movie.trailer))}
-              <div
-                style={{
-                  width: "100%",
-                  maxWidth: 500,
-                  display: "block",
-                  padding: "10px 20px 10px 20px",
-                  color: "rgba(0,0,0,0.7)"
-                }}
-              >
-                <a
-                  href={movie.rtLink}
-                  style={{
-                    padding: "0px 0px",
-                    marginBottom: "5px",
-                    fontWeight: "bold",
-                    color: styles.black(0.9),
-                    fontSize: 18
-                  }}
-                >
-                  {movie.title}
-                </a>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                    marginBottom: 20
-                  }}
-                >
-                  <h6 style={{ margin: "5px 10px 5px 0px" }}>
-                    <span>🔒</span>
-                    <strong>{daysUntilRelease - 7} days</strong>
-                  </h6>
-                  <h6 style={{ margin: "5px 10px 5px 0px" }}>
-                    <span>🎬</span>
-                    {/*<strong>{daysUntilRelease} days</strong>{" "}*/}
-                    <span style={{ color: "#888", marginLeft: 0 }}>
-                      {moment(movie.releaseDate * 1000).format("MMM DD, YYYY")}
-                    </span>
-                  </h6>
-
-                  <h6 style={{ margin: "5px 10px 5px 0px" }}>
-                    <span>🍅</span>{" "}
-                    <a href={movie.rtLink} target={"_blank"}>
-                      View on Rotten Tomatoes®
-                    </a>
-                  </h6>
-                </div>
-                {renderInput(movie)}
-              </div>
-            </div>
+              user={this.props.user}
+              movie={movie}
+              styles={styles}
+              updateUser={this.props.updateUser}
+              moviePredictionCutoffDate={this.state.moviePredictionCutoffDate}
+            />
           );
         })}
       </div>

@@ -1,16 +1,26 @@
 import React, { Component } from "react";
 import axios from "axios";
-import MovieTable from "../MovieTable";
+import Movie from "../Movie";
+import Select from "react-select";
 
 class PastPredictions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies: []
+      movies: [],
+      predictionBreakdowns: null,
+      group: null,
+      selectedGroup: null
     };
   }
 
   componentDidMount() {
+    this.setState({
+      selectedGroup: {
+        value: this.props.user.groups[0]._id,
+        label: this.makeLabel(this.props.user.groups[0])
+      }
+    });
     axios
       .get(
         `${process.env.REACT_APP_API_URL ||
@@ -20,11 +30,7 @@ class PastPredictions extends Component {
         }
       )
       .then(response => {
-        const filtered = response.data.movies.filter(movie => {
-          console.log(this.props.user.votes);
-          return movie._id in this.props.user.votes;
-        });
-        const sorted = filtered.sort((a, b) => {
+        const sorted = response.data.movies.sort((a, b) => {
           if (a.releaseDate > b.releaseDate) {
             return -1;
           } else if (a.releaseDate < b.releaseDate) {
@@ -38,86 +44,104 @@ class PastPredictions extends Component {
         });
       })
       .catch(e => console.log(e));
+
+    this.getGroupBreakdowns(this.props.user.groups[0]._id);
+  }
+
+  getGroupBreakdowns(groupId) {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL ||
+          "https://predict-movies-prod.herokuapp.com"}/group_breakdowns/${groupId}/past`
+      )
+      .then(response => {
+        this.setState({ predictionBreakdowns: response.data.breakdowns });
+      })
+      .catch(e => console.log(e));
+  }
+
+  makeLabel(group) {
+    let text = `${group.name} - `;
+    for (let member of group.members) {
+      if (member.name !== "Movie Medium") {
+        text = text + " " + member.name;
+      }
+    }
+
+    return text;
+  }
+
+  handleSelect(option) {
+    this.setState({ selectedGroup: option });
+    this.getGroupBreakdowns(option.value);
   }
 
   render() {
-    const { user } = this.props;
-    const renderAvg = () => {
-      let total = 0,
-        numMovies = 0;
+    const { user, styles } = this.props;
+    const { selectedGroup } = this.state;
 
-      for (let vote in user.votes) {
-        let movie = this.state.movies.find(movie => movie._id === vote);
-        if (movie) {
-          numMovies++;
-          let diff = movie.rtScore - user.votes[vote];
-          total = total + Math.abs(diff);
-        }
-      }
-
-      if (!numMovies) {
-        return (
-          <div style={{ maxWidth: 500, margin: "auto", padding: 20 }}>
-            Once you've made a prediction and the movie gets an official Rotten
-            Tomatoes Score, the result will show up here along with your average
-            prediction accuracy.
-          </div>
-        );
-      } else {
-        return (
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center"
-            }}
-          >
-            <h5
-              style={{ opacity: 0.8 }}
-            >{`On average, your ${numMovies} prediction${
-              numMovies === 1 ? "" : "s"
-            } ${numMovies === 1 ? "is" : "are"}`}</h5>
-            <h2
-              style={{
-                margin: "10px 0px",
-                display: "flex",
-                alignItems: "center"
-              }}
-            >
-              <strong>{Number(total / numMovies).toFixed(1)}</strong>
-              <span
-                style={{
-                  color: "rgba(0, 0, 0, 0.4)",
-                  paddingLeft: 2,
-                  fontSize: 18
-                }}
-              >
-                %
-              </span>
-            </h2>
-            <h5 style={{ opacity: 0.8 }}>
-              off from the actual{" "}
-              <a target={"_blank"} href="https://www.rottentomatoes.com/about">
-                Rotten Tomatoes® Score
-              </a>.
-            </h5>
-          </div>
-        );
-      }
-    };
+    const options = this.props.user.groups.map(group => {
+      return { value: group._id, label: this.makeLabel(group) };
+    });
 
     return (
       <div
         style={{
-          margin: "auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           width: "100%",
-          maxWidth: 700,
-          padding: "30px 10px"
+          maxWidth: 500,
+          padding: "120px 0px",
+          margin: "auto"
         }}
       >
-        {renderAvg()}
-        <MovieTable movies={this.state.movies} user={this.props.user} />
+        {this.props.user &&
+          this.props.user.groups.length > 1 && (
+            <div
+              style={{
+                width: 400,
+                maxWidth: "100%",
+                marginBottom: 20,
+                padding: "0px 20px"
+              }}
+            >
+              <Select
+                options={options}
+                value={selectedGroup || { label: "", value: null }}
+                onChange={option => this.handleSelect(option)}
+              />
+            </div>
+          )}
+        <h5
+          style={{
+            textAlign: "center",
+            // fontWeight: "bold",
+            color: styles.primary(0.7)
+          }}
+        >
+          See your past predictions and scores
+        </h5>
+        <h5 style={{ margin: "10px 0px 20px 0px", color: styles.primary(0.4) }}>
+          &darr;
+        </h5>
+        {this.state.movies.map((movie, i) => {
+          return (
+            <Movie
+              isPast
+              key={i}
+              user={this.props.user}
+              movie={movie}
+              groupData={
+                this.state.predictionBreakdowns
+                  ? this.state.predictionBreakdowns[movie._id] || []
+                  : []
+              }
+              styles={styles}
+              updateUser={this.props.updateUser}
+            />
+          );
+        })}
       </div>
     );
   }

@@ -48,7 +48,7 @@ class Home extends Component {
 
       const signInBtnStyle = {
         margin: "0px 0px 0px 0px",
-        backgroundColor: styles.secondary(),
+        backgroundColor: styles.white(0.4),
         color: "#fff",
         fontWeight: "bold",
         padding: "4px 10px",
@@ -86,7 +86,7 @@ class Home extends Component {
             >
               Movie Medium
             </div>
-            {user ? (
+            {user && user.groups.length ? (
               <Link
                 to={"/upcoming"}
                 style={signInBtnStyle}
@@ -114,7 +114,7 @@ class Home extends Component {
                   href="https://www.rottentomatoes.com/"
                   style={{ color: "#fff" }}
                 >
-                  Rotten Tomatoes®
+                  Rotten Tomatoes
                 </a>
                 <br />
                 scores with friends
@@ -125,15 +125,19 @@ class Home extends Component {
                   backgroundColor: styles.secondary(),
                   color: "#fff",
                   fontWeight: "bold",
-                  padding: "10px 20px",
+                  padding: "8px 40px",
                   textDecoration: "none",
                   borderRadius: 3,
-                  fontSize: 16
+                  fontSize: 16,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
                 }}
                 className={"hoverBtn"}
                 href={process.env.REACT_APP_GROUPME_AUTH || url}
               >
-                Start playing in GroupMe
+                Start Playing via GroupMe
+                {/*<span style={{ marginLeft: 10, fontSize: 20 }}>&rarr;</span>*/}
               </a>
               <div
                 style={{
@@ -147,7 +151,7 @@ class Home extends Component {
                   style={{ color: styles.white(0.5) }}
                   href="https://www.rottentomatoes.com/"
                 >
-                  Rotten Tomatoes®
+                  Rotten Tomatoes
                 </a>
               </div>
             </div>
@@ -172,11 +176,33 @@ class Home extends Component {
       );
     };
 
+    const btnStyle = {
+      color: styles.white(0.7),
+      margin: "5px 20px"
+    };
+
     return (
       <div>
         {renderLanding()}
-        <div style={{ backgroundColor: styles.black(0.02), height: "100vh" }}>
-          hey
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: styles.primary(),
+            padding: "50px 20px"
+          }}
+        >
+          <Link to={"/terms"} style={btnStyle}>
+            Terms of Service
+          </Link>
+          <Link to={"/privacy"} style={btnStyle}>
+            Privacy Policy
+          </Link>
+          <a href={"mailto:ryanjyost@gmail.com"} style={btnStyle}>
+            Contact Me
+          </a>
         </div>
       </div>
     );

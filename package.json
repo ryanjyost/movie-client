@@ -8,9 +8,11 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-loader": "^8.0.4",
+    "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "mongoose": "^5.4.1",
     "query-string": "^5.1.1",
+    "rc-progress": "^2.3.0",
     "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
     "react-datetime": "^2.16.3",
@@ -18,7 +20,8 @@
     "react-router-dom": "^4.3.1",
     "react-select": "^2.3.0",
     "react-table": "^6.8.6",
-    "react-youtube": "^7.8.0"
+    "react-youtube": "^7.8.0",
+    "store": "^2.0.12"
   },
   "scripts": {
     "start": "react-scripts start",
