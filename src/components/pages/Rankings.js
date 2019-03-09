@@ -9,7 +9,8 @@ export default class Rankings extends Component {
     super(props);
     this.state = {
       rankings: [],
-      selectedGroup: null
+      selectedGroup: null,
+      didMount: false
     };
   }
 
@@ -25,6 +26,8 @@ export default class Rankings extends Component {
       });
       this.getRankings(this.props.user.groups[0]._id);
     }
+
+    this.setState({ didMount: true });
   }
 
   getRankings(groupId) {
@@ -63,13 +66,18 @@ export default class Rankings extends Component {
     const { styles, user } = this.props;
     const { selectedGroup } = this.state;
 
-    const options = this.props.user.groups.map(group => {
-      return { value: group._id, label: this.makeLabel(group) };
-    });
+    if (!this.state.didMount) {
+      return null;
+    }
 
     if (!this.state.selectedGroup) {
       return <Redirect to={"/create-group"} />;
     }
+
+    const options = this.props.user.groups.map(group => {
+      return { value: group._id, label: this.makeLabel(group) };
+    });
+
     return (
       <div
         style={{

@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4e571adb-78d9-4542-90cc-685e52b75e46" name="Default" comment="more fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pages/PastPredictions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/PastPredictions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pages/Purgatory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/Purgatory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/Rankings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/Rankings.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,11 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".env" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".env" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.env">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="8" column="41" lean-forward="true" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
+            <state relative-caret-position="220">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
             </state>
           </provider>
         </entry>
@@ -46,20 +45,17 @@
         <entry file="file://$PROJECT_DIR$/src/components/pages/Purgatory.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="111">
-              <caret line="59" column="34" lean-forward="true" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="34" />
+              <caret line="59" column="34" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="34" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Rankings.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Rankings.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/pages/Rankings.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="42" column="33" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
+            <state relative-caret-position="127">
+              <caret line="68" column="27" lean-forward="true" selection-start-line="68" selection-start-column="27" selection-end-line="68" selection-end-column="27" />
               <folding>
-                <element signature="e#212#307#0" />
-                <element signature="e#249#302#0" />
-                <element signature="e#1503#5481#0" />
                 <element signature="e#1523#1735#0" />
                 <element signature="e#1753#1968#0" />
                 <element signature="e#1774#1918#0" />
@@ -68,7 +64,6 @@
                 <element signature="e#2414#2827#0" />
                 <element signature="e#2440#2589#0" />
                 <element signature="e#2619#2808#0" />
-                <element signature="e#2889#5466#0" />
                 <element signature="e#3108#3209#0" />
                 <element signature="e#3225#3326#0" />
                 <element signature="e#3358#5443#0" />
@@ -89,7 +84,7 @@
       <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="415">
+            <state relative-caret-position="438">
               <caret line="43" selection-start-line="43" selection-end-line="43" />
             </state>
           </provider>
@@ -99,7 +94,7 @@
         <entry file="file://$PROJECT_DIR$/src/components/pages/PastPredictions.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="223">
-              <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
+              <caret line="70" selection-start-line="70" selection-end-line="70" />
             </state>
           </provider>
         </entry>
@@ -138,7 +133,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Make your</find>
       <find>make your</find>
       <find>padding</find>
       <find>maxWidth</find>
@@ -168,6 +162,7 @@
       <find>react-sel</find>
       <find>group_breakdowns</find>
       <find>http</find>
+      <find>UPDATE US</find>
     </findStrings>
     <replaceStrings>
       <replace>https://predict-movies-prod.herokuapp.com</replace>
@@ -235,10 +230,10 @@
         <option value="$PROJECT_DIR$/src/components/pages/Rules.js" />
         <option value="$PROJECT_DIR$/src/components/pages/AuthRedirect.js" />
         <option value="$PROJECT_DIR$/src/components/pages/Home.js" />
-        <option value="$PROJECT_DIR$/src/components/pages/Rankings.js" />
         <option value="$PROJECT_DIR$/src/components/pages/Purgatory.js" />
         <option value="$PROJECT_DIR$/src/components/pages/PastPredictions.js" />
         <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/src/components/pages/Rankings.js" />
       </list>
     </option>
   </component>
@@ -379,7 +374,7 @@
       <workItem from="1550278066080" duration="26775000" />
       <workItem from="1550381969483" duration="27594000" />
       <workItem from="1550882037444" duration="17984000" />
-      <workItem from="1551570701117" duration="16046000" />
+      <workItem from="1551570701117" duration="18061000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1546664228234</created>
@@ -500,11 +495,25 @@
       <option name="project" value="LOCAL" />
       <updated>1552168141238</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="more fixes">
+      <created>1552168817487</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1552168817487</updated>
+    </task>
+    <task id="LOCAL-00019" summary="more fixes">
+      <created>1552171202472</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1552171202473</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="235271000" />
+    <option name="totallyTimeSpent" value="237286000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="6" />
@@ -516,8 +525,8 @@
       <window_info anchor="bottom" id="Run" order="2" weight="0.32892805" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info id="npm" order="2" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.4983845" visible="true" weight="0.32352942" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24717286" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4983845" weight="0.32352942" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24717286" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -950,13 +959,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
-          <caret line="43" selection-start-line="43" selection-end-line="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/pages/Home.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3220">
@@ -975,14 +977,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/pages/Purgatory.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="59" column="34" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/pages/PastPredictions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="70" selection-start-line="70" selection-end-line="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/pages/Rankings.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="42" column="33" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
+        <state relative-caret-position="127">
+          <caret line="68" column="27" lean-forward="true" selection-start-line="68" selection-start-column="27" selection-end-line="68" selection-end-column="27" />
           <folding>
-            <element signature="e#212#307#0" />
-            <element signature="e#249#302#0" />
-            <element signature="e#1503#5481#0" />
             <element signature="e#1523#1735#0" />
             <element signature="e#1753#1968#0" />
             <element signature="e#1774#1918#0" />
@@ -991,7 +1018,6 @@
             <element signature="e#2414#2827#0" />
             <element signature="e#2440#2589#0" />
             <element signature="e#2619#2808#0" />
-            <element signature="e#2889#5466#0" />
             <element signature="e#3108#3209#0" />
             <element signature="e#3225#3326#0" />
             <element signature="e#3358#5443#0" />
@@ -1005,27 +1031,6 @@
             <element signature="e#5010#5149#0" />
             <element signature="e#5208#5424#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/pages/Purgatory.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="59" column="34" lean-forward="true" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/pages/PastPredictions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="70" lean-forward="true" selection-start-line="70" selection-end-line="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="8" column="41" lean-forward="true" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
         </state>
       </provider>
     </entry>
