@@ -110,7 +110,6 @@ class App extends Component {
   }
 
   updateUser(user) {
-    console.log("UPDATE USER", user);
     this.setState({ user });
     Storage.set("userId", user._id);
   }
