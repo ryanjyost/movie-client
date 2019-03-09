@@ -61,14 +61,18 @@ class PastPredictions extends Component {
   }
 
   makeLabel(group) {
-    let text = `${group.name} - `;
-    for (let member of group.members) {
-      if (member.name !== "Movie Medium") {
-        text = text + " " + member.name;
+    if (group) {
+      let text = `${group.name} - `;
+      for (let member of group.members) {
+        if (member.name !== "Movie Medium") {
+          text = text + " " + member.name;
+        }
       }
-    }
 
-    return text;
+      return text;
+    } else {
+      return "";
+    }
   }
 
   handleSelect(option) {
