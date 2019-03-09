@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Line } from "rc-progress";
 import Select from "react-select";
+import { Redirect } from "react-router-dom";
 
 export default class Rankings extends Component {
   constructor(props) {
@@ -13,16 +14,17 @@ export default class Rankings extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      selectedGroup: this.props.user
-        ? {
-            value: this.props.user.groups[0]._id,
-            label: this.makeLabel(this.props.user.groups[0])
-          }
-        : null
-    });
-
-    this.getRankings(this.props.user.groups[0]._id);
+    if (this.props.user.groups.length) {
+      this.setState({
+        selectedGroup: this.props.user
+          ? {
+              value: this.props.user.groups[0]._id,
+              label: this.makeLabel(this.props.user.groups[0])
+            }
+          : null
+      });
+      this.getRankings(this.props.user.groups[0]._id);
+    }
   }
 
   getRankings(groupId) {
@@ -38,14 +40,18 @@ export default class Rankings extends Component {
   }
 
   makeLabel(group) {
-    let text = `${group.name} - `;
-    for (let member of group.members) {
-      if (member.name !== "Movie Medium") {
-        text = text + " " + member.name;
+    if (group && group.members) {
+      let text = `${group.name} - `;
+      for (let member of group.members) {
+        if (member.name !== "Movie Medium") {
+          text = text + " " + member.name;
+        }
       }
+
+      return text;
     }
 
-    return text;
+    return "";
   }
 
   handleSelect(option) {
@@ -61,6 +67,9 @@ export default class Rankings extends Component {
       return { value: group._id, label: this.makeLabel(group) };
     });
 
+    if (!this.state.selectedGroup) {
+      return <Redirect to={"/create-group"} />;
+    }
     return (
       <div
         style={{
