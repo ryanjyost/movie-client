@@ -61,7 +61,7 @@ class PastPredictions extends Component {
   }
 
   makeLabel(group) {
-    if (group) {
+    if (group && group.members) {
       let text = `${group.name} - `;
       for (let member of group.members) {
         if (member.name !== "Movie Medium") {
