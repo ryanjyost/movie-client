@@ -10,6 +10,7 @@
     "babel-loader": "^8.0.4",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
+    "moment-timezone": "^0.5.23",
     "mongoose": "^5.4.1",
     "query-string": "^5.1.1",
     "rc-progress": "^2.3.0",
