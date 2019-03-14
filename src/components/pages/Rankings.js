@@ -24,7 +24,11 @@ export default class Rankings extends Component {
             }
           : null
       });
-      this.getRankings(this.props.user.groups[0]._id);
+      this.getRankings(
+        typeof this.props.user.groups[0] === "object"
+          ? this.props.user.groups[0]._id
+          : this.props.user.groups[0]
+      );
     }
 
     this.setState({ didMount: true });
@@ -37,7 +41,9 @@ export default class Rankings extends Component {
           "https://predict-movies-prod.herokuapp.com"}/groups/${groupId}/rankings`
       )
       .then(response => {
-        this.setState({ rankings: response.data.rankings });
+        if (response.data) {
+          this.setState({ rankings: response.data.rankings });
+        }
       })
       .catch(e => console.log(e));
   }
@@ -66,7 +72,12 @@ export default class Rankings extends Component {
     const { styles, user } = this.props;
     const { selectedGroup } = this.state;
 
-    if (!this.state.didMount) {
+    if (!this.state.didMount || !this.state.rankings) {
+      return null;
+    } else if (
+      Array.isArray(this.state.rankings) &&
+      !this.state.rankings.length
+    ) {
       return null;
     }
 
