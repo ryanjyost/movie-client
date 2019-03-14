@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import YouTube from "react-youtube";
-import moment from "moment";
-import { Button, FormGroup, FormControl } from "react-bootstrap";
+import withStyles from "../../lib/withStyles";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
   constructor(props) {
@@ -31,7 +30,7 @@ class Home extends Component {
           }
         )
         .then(response => {
-          this.props.updateUser(response.data.user, !response.data.isMember);
+          this.props.updateUser({ ...response.data.user, ...{ accessToken } });
           this.setState({
             votes: response.data.user.votes || {}
           });
@@ -41,50 +40,173 @@ class Home extends Component {
   }
 
   render() {
+    const { styles, user } = this.props;
+
     const renderLanding = () => {
       const url =
         "https://oauth.groupme.com/oauth/authorize?client_id=m35GLCvXufGcG7vL8243ZXNaZ8hGs9QcUoIFiNFSmeXRw3Ba";
+
+      const signInBtnStyle = {
+        margin: "0px 0px 0px 0px",
+        backgroundColor: styles.white(0.4),
+        color: "#fff",
+        fontWeight: "bold",
+        padding: "4px 10px",
+        textDecoration: "none",
+        borderRadius: 3
+      };
+
       return (
         <div
           style={{
-            height: "100vh",
             width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center"
+            textAlign: "center",
+            backgroundColor: styles.primary(),
+            padding: "0px 0px 20px 0px",
+            overflow: "hidden",
+            boxSizing: "border-box"
           }}
         >
-          <h1>Movie Medium</h1>
-          <p>
-            Predict{" "}
-            <a target={"_blank"} href="https://www.rottentomatoes.com/">
-              Rotten Tomatoes
-            </a>{" "}
-            scores with friends.
-          </p>
-          <a
+          <div
+            className={"topBar"}
             style={{
-              margin: "20px 0px 0px 0px",
-              backgroundColor: "#00aff0",
-              color: "#fff",
-              fontWeight: "bold",
-              padding: "10px 20px",
-              textDecoration: "none",
-              borderRadius: 3
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: 20
             }}
-            className={"homeButton"}
-            href={process.env.REACT_APP_GROUPME_AUTH || url}
           >
-            Sign in with GroupMe
-          </a>
+            <div
+              style={{
+                color: styles.white(),
+                fontWeight: "bold",
+                fontSize: 20
+              }}
+            >
+              Movie Medium
+            </div>
+            {user && user.groups.length ? (
+              <Link
+                to={"/upcoming"}
+                style={signInBtnStyle}
+                className={"hoverBtn"}
+              >
+                Sign In
+              </Link>
+            ) : (
+              <a
+                style={signInBtnStyle}
+                className={"hoverBtn"}
+                href={process.env.REACT_APP_GROUPME_AUTH || url}
+              >
+                Sign in
+              </a>
+            )}
+          </div>
+
+          <div className="main">
+            <div id={"left"}>
+              <h2 style={{ color: styles.white(0.95), fontWeight: "bold" }}>
+                Predict{" "}
+                <a
+                  target={"_blank"}
+                  href="https://www.rottentomatoes.com/"
+                  style={{ color: "#fff" }}
+                >
+                  Rotten Tomatoes
+                </a>
+                <br />
+                scores with friends
+              </h2>
+              <a
+                style={{
+                  margin: "20px 0px 0px 0px",
+                  backgroundColor: styles.secondary(),
+                  color: "#fff",
+                  fontWeight: "bold",
+                  padding: "8px 40px",
+                  textDecoration: "none",
+                  borderRadius: 3,
+                  fontSize: 16,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+                className={"hoverBtn"}
+                href={process.env.REACT_APP_GROUPME_AUTH || url}
+              >
+                Start Playing via GroupMe
+                {/*<span style={{ marginLeft: 10, fontSize: 20 }}>&rarr;</span>*/}
+              </a>
+              <div
+                style={{
+                  textAlign: "center",
+                  paddingTop: 20,
+                  color: styles.white(0.5)
+                }}
+              >
+                Not endorsed by{" "}
+                <a
+                  style={{ color: styles.white(0.5) }}
+                  href="https://www.rottentomatoes.com/"
+                >
+                  Rotten Tomatoes
+                </a>
+              </div>
+            </div>
+
+            <div id={"right"}>
+              <div className="marvel-device iphone8 silver">
+                <div className="top-bar" />
+                <div className="sleep" />
+                <div className="volume" />
+                <div className="camera" />
+                {/*<div className="sensor" />*/}
+                <div className="speaker" />
+                <div className="screen">
+                  <img src="preview.jpeg" width="100%" />
+                </div>
+                <div className="home" />
+                <div className="bottom-bar" />
+              </div>
+            </div>
+          </div>
         </div>
       );
     };
 
-    return renderLanding();
+    const btnStyle = {
+      color: styles.white(0.7),
+      margin: "5px 20px"
+    };
+
+    return (
+      <div>
+        {renderLanding()}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: styles.primary(),
+            padding: "50px 20px"
+          }}
+        >
+          <Link to={"/terms"} style={btnStyle}>
+            Terms of Service
+          </Link>
+          <Link to={"/privacy"} style={btnStyle}>
+            Privacy Policy
+          </Link>
+          <a href={"mailto:ryanjyost@gmail.com"} style={btnStyle}>
+            Contact Me
+          </a>
+        </div>
+      </div>
+    );
   }
 }
 
-export default Home;
+export default withStyles(Home);

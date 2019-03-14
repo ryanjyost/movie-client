@@ -1,16 +1,26 @@
 import React, { Component } from "react";
 import axios from "axios";
-import MovieTable from "../MovieTable";
+import Movie from "../Movie";
+import Select from "react-select";
 
 class Purgatory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies: []
+      movies: [],
+      predictionBreakdowns: null,
+      group: null,
+      selectedGroup: null
     };
   }
 
   componentDidMount() {
+    this.setState({
+      selectedGroup: {
+        value: this.props.user.groups[0]._id,
+        label: this.makeLabel(this.props.user.groups[0])
+      }
+    });
     axios
       .get(
         `${process.env.REACT_APP_API_URL ||
@@ -34,24 +44,108 @@ class Purgatory extends Component {
         });
       })
       .catch(e => console.log(e));
+
+    this.getGroupBreakdowns(this.props.user.groups[0]._id);
+  }
+
+  getGroupBreakdowns(groupId) {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL ||
+          "https://predict-movies-prod.herokuapp.com"}/group_breakdowns/${groupId}/purgatory`
+      )
+      .then(response => {
+        this.setState({ predictionBreakdowns: response.data.breakdowns });
+      })
+      .catch(e => console.log(e));
+  }
+
+  makeLabel(group) {
+    if (group && group.members) {
+      let text = `${group.name} - `;
+      for (let member of group.members) {
+        if (member.name !== "Movie Medium") {
+          text = text + " " + member.name;
+        }
+      }
+
+      return text;
+    } else {
+      return "";
+    }
+  }
+
+  handleSelect(option) {
+    this.setState({ selectedGroup: option });
+    this.getGroupBreakdowns(option.value);
   }
 
   render() {
+    const { styles } = this.props;
+    const { selectedGroup } = this.state;
+
+    const options = this.props.user.groups.map(group => {
+      return { value: group._id, label: this.makeLabel(group) };
+    });
+
     return (
       <div
         style={{
-          margin: "auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           width: "100%",
-          maxWidth: 700,
-          padding: "30px 10px"
+          maxWidth: 500,
+          padding: "120px 0px",
+          margin: "auto"
         }}
       >
-        <div style={{ maxWidth: 500, margin: "auto", padding: 20 }}>
-          These movies don't have a Rotten Tomatoes Score yet, but are close to
-          the release date and closed to any more predictions.{" "}
-          <strong>See your locked-in predictions below.</strong>{" "}
-        </div>
-        <MovieTable movies={this.state.movies} user={this.props.user} />
+        {this.props.user &&
+          this.props.user.groups.length > 1 && (
+            <div
+              style={{
+                width: 400,
+                maxWidth: "100%",
+                marginBottom: 20,
+                padding: "0px 20px"
+              }}
+            >
+              <Select
+                options={options}
+                value={selectedGroup || { label: "", value: null }}
+                onChange={option => this.handleSelect(option)}
+              />
+            </div>
+          )}
+        <h5
+          style={{
+            textAlign: "center",
+            // fontWeight: "bold",
+            color: styles.primary(0.7)
+          }}
+        >
+          Predictions are locked in. Waiting for the RT score...
+        </h5>
+        <h5 style={{ margin: "10px 0px 20px 0px", color: styles.primary(0.4) }}>
+          &darr;
+        </h5>
+        {this.state.movies.map((movie, i) => {
+          return (
+            <Movie
+              isPurgatory
+              key={i}
+              user={this.props.user}
+              movie={movie}
+              groupData={
+                this.state.predictionBreakdowns
+                  ? this.state.predictionBreakdowns[movie._id]
+                  : []
+              }
+              styles={styles}
+              updateUser={this.props.updateUser}
+            />
+          );
+        })}
       </div>
     );
   }
