@@ -107,6 +107,10 @@ class App extends Component {
     //         .catch(e => console.log(e));
     //     }
     //   }
+
+    window.YTConfig = {
+      host: "https://youtube.com"
+    };
   }
 
   updateUser(user) {

@@ -40,8 +40,7 @@ class Admin extends Component {
           "https://predict-movies-prod.herokuapp.com"}/movies`
       )
       .then(response => {
-        console.log(response.data);
-        this.setState({ movies: response.data.movies });
+        this.setState({ movies: response.data.movies.reverse() });
       })
       .catch(e => console.log(e));
   }
