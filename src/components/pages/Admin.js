@@ -27,7 +27,9 @@ class Admin extends Component {
 
       movies: [],
       isEdit: false,
-      beingEdited: {}
+      beingEdited: {},
+
+      messageToGroups: ""
     };
 
     //"https://predict-movies-prod.herokuapp.com"/
@@ -121,6 +123,23 @@ class Admin extends Component {
           movies: response.data.movies,
           isEdit: false,
           beingEdited: {}
+        });
+      })
+      .catch(e => console.log(e));
+  }
+
+  sendMessageToAllGroups() {
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL ||
+          "https://predict-movies-prod.herokuapp.com"}/groups/message/`,
+        {
+          message: this.state.messageToGroups
+        }
+      )
+      .then(response => {
+        this.setState({
+          messageToGroups: ""
         });
       })
       .catch(e => console.log(e));
@@ -281,6 +300,29 @@ class Admin extends Component {
       );
     };
 
+    const groupMessage = () => {
+      return (
+        <div
+          style={{
+            width: "100%",
+            padding: 20,
+            borderBottom: "3px solid #fff"
+          }}
+        >
+          <h4>Send Message to all groups</h4>
+
+          <div style={{ width: "100%", padding: "10px 0px" }}>
+            <textarea
+              style={{ width: "100%" }}
+              value={this.state.messageToGroups}
+              onChange={e => this.setState({ messageToGroups: e.target.value })}
+            />
+          </div>
+          <Button onClick={() => this.sendMessageToAllGroups()}>Send</Button>
+        </div>
+      );
+    };
+
     return (
       <div
         style={{
@@ -295,6 +337,9 @@ class Admin extends Component {
           {process.env.REACT_APP_API_URL ||
             "https://predict-movies-prod.herokuapp.com"}
         </h1>
+
+        {groupMessage()}
+
         {renderForm(false)}
 
         {renderTable()}
