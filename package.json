@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "2.1.2"
+    "react-scripts": "2.1.2",
+    "sw-precache": "^5.2.1"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -27,6 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-no-cache": "react-scripts build && sw-precache --root='build/' --config config/sw.js ",
     "deploy-staging": "aws s3 sync build/ s3://staging.moviemedium.io --delete",
     "deploy-prod-dangerous": "aws s3 sync build/ s3://moviemedium.io --delete",
     "test": "react-scripts test",
