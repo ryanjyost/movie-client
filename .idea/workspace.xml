@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4e571adb-78d9-4542-90cc-685e52b75e46" name="Default" comment="PWA stuff">
+    <list default="true" id="4e571adb-78d9-4542-90cc-685e52b75e46" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/sw.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/sw.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Movie.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Movie.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/pages/Rules.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/Rules.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,115 +14,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PastPredictions.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/pages/PastPredictions.js">
+      <file leaf-file-name=".env" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.env">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1060">
-              <caret line="70" selection-start-line="70" selection-end-line="70" />
+            <state relative-caret-position="200">
+              <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Movie.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Movie.js">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="367" column="30" lean-forward="true" selection-start-line="367" selection-start-column="30" selection-end-line="367" selection-end-column="30" />
-              <folding>
-                <element signature="e#0#41#0" />
-                <element signature="e#375#514#0" />
-                <element signature="e#412#509#0" />
-                <element signature="e#538#787#0" />
-                <element signature="e#544#552#0" />
-                <element signature="e#811#993#0" />
-                <element signature="e#1029#1207#0" />
-                <element signature="e#1071#1096#0" />
-                <element signature="e#1117#1140#0" />
-                <element signature="e#1146#1173#0" />
-                <element signature="e#1237#1487#0" />
-                <element signature="e#1432#1481#0" />
-                <element signature="e#1509#2115#0" />
-                <element signature="e#1669#1757#0" />
-                <element signature="e#1790#1990#0" />
-                <element signature="e#1865#1980#0" />
-                <element signature="e#2010#2109#0" />
-                <element signature="e#2156#2641#0" />
-                <element signature="e#2324#2405#0" />
-                <element signature="e#2528#2612#0" />
-                <element signature="e#2998#4159#0" />
-                <element signature="e#3074#3141#0" />
-                <element signature="e#3167#4144#0" />
-                <element signature="e#3189#3403#0" />
-                <element signature="e#3425#3626#0" />
-                <element signature="e#3546#3612#0" />
-                <element signature="e#3668#4116#0" />
-                <element signature="e#3694#4029#0" />
-                <element signature="e#4195#8668#0" />
-                <element signature="e#4566#6329#0" />
-                <element signature="e#4595#6310#0" />
-                <element signature="e#4619#4816#0" />
-                <element signature="e#4842#5584#0" />
-                <element signature="e#4868#4955#0" />
-                <element signature="e#4985#5498#0" />
-                <element signature="e#5067#5471#0" />
-                <element signature="e#5113#5266#0" />
-                <element signature="e#5152#5246#0" />
-                <element signature="e#5598#6293#0" />
-                <element signature="e#5744#5863#0" />
-                <element signature="e#5894#6006#0" />
-                <element signature="e#6335#8662#0" />
-                <element signature="e#6364#8643#0" />
-                <element signature="e#6388#6585#0" />
-                <element signature="e#6638#7066#0" />
-                <element signature="e#6666#6802#0" />
-                <element signature="e#6836#6968#0" />
-                <element signature="e#7099#7683#0" />
-                <element signature="e#7127#7220#0" />
-                <element signature="e#7254#7491#0" />
-                <element signature="e#7284#7425#0" />
-                <element signature="e#7508#7662#0" />
-                <element signature="e#7712#8626#0" />
-                <element signature="e#7937#8331#0" />
-                <element signature="e#9219#9314#0" />
-                <element signature="e#9330#9429#0" />
-                <element signature="e#9445#9540#0" />
-                <element signature="e#9947#10114#0" />
-                <element signature="e#10172#10436#0" />
-                <element signature="e#11552#11967#0" />
-                <element signature="e#12002#12018#0" />
-                <element signature="e#12037#12046#0" />
-                <element signature="e#12065#12077#0" />
-                <element signature="e#12096#12125#0" />
-                <element signature="e#12144#12164#0" />
-                <element signature="e#12183#12208#0" />
-                <element signature="e#12227#12243#0" />
-                <element signature="e#12262#12268#0" />
-                <element signature="e#12287#12292#0" />
-                <element signature="e#12311#12327#0" />
-                <element signature="e#12346#12366#0" />
-                <element signature="e#12385#12394#0" />
-                <element signature="e#12413#12430#0" />
-                <element signature="e#12449#12495#0" />
-                <element signature="e#12514#12525#0" />
-                <element signature="e#12544#12550#0" />
-                <element signature="e#12897#13357#0" />
-                <element signature="e#12919#13070#0" />
-                <element signature="e#13128#13277#0" />
-                <element signature="e#13394#15497#0" />
-                <element signature="e#13414#13779#0" />
-                <element signature="e#13870#15484#0" />
-                <element signature="e#13892#14070#0" />
-                <element signature="e#14092#14385#0" />
-                <element signature="e#14146#14331#0" />
-                <element signature="e#14396#15361#0" />
-                <element signature="e#14420#14565#0" />
-                <element signature="e#14622#14773#0" />
-                <element signature="e#14801#15116#0" />
-                <element signature="e#14890#14939#0" />
-                <element signature="e#14955#15098#0" />
-                <element signature="e#15130#15344#0" />
-                <element signature="e#15218#15326#0" />
-              </folding>
+            <state relative-caret-position="279">
+              <caret line="36" column="19" lean-forward="true" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -133,21 +35,17 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="20" column="25" lean-forward="true" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+            <state relative-caret-position="227">
+              <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.js">
+      <file leaf-file-name="Rules.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/pages/Rules.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5049">
-              <caret line="109" selection-start-line="109" selection-end-line="109" />
-              <folding>
-                <element signature="n#!!block;n#constructor#0;n#App#0" />
-                <element signature="n#!!block;n#updateUser#0;n#App#0" />
-              </folding>
+            <state relative-caret-position="294">
+              <caret line="79" column="57" selection-start-line="79" selection-start-column="57" selection-end-line="79" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -163,9 +61,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>save y</find>
-      <find>Rotten Tomatoes</find>
-      <find>render</find>
       <find>moviesBeing</find>
       <find>conso</find>
       <find>&lt;Yout</find>
@@ -192,7 +87,10 @@
       <find>America/</find>
       <find>lock</find>
       <find>moviePredictionCutoffDate</find>
+      <find>-1</find>
+      <find>&lt; 0</find>
       <find>off</find>
+      <find>b80ae9b</find>
     </findStrings>
     <replaceStrings>
       <replace>https://predict-movies-prod.herokuapp.com</replace>
@@ -257,15 +155,15 @@
         <option value="$PROJECT_DIR$/src/components/pages/Purgatory.js" />
         <option value="$PROJECT_DIR$/src/components/pages/Rankings.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
-        <option value="$PROJECT_DIR$/src/components/pages/Rules.js" />
         <option value="$PROJECT_DIR$/src/components/pages/Admin.js" />
         <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/src/index.css" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/config/sw.js" />
-        <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/src/components/Movie.js" />
         <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/src/components/Movie.js" />
+        <option value="$PROJECT_DIR$/src/components/pages/Rules.js" />
+        <option value="$PROJECT_DIR$/.env" />
       </list>
     </option>
   </component>
@@ -311,25 +209,20 @@
             <path>
               <item name="movie-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="movie-client" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="movie-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="movie-client" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="movie-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="movie-client" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="movie-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="movie-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="movie-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="movie-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -415,7 +308,7 @@
       <workItem from="1554159616339" duration="251000" />
       <workItem from="1554416730457" duration="1413000" />
       <workItem from="1554689092972" duration="4850000" />
-      <workItem from="1555025990180" duration="1369000" />
+      <workItem from="1555025990180" duration="4906000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1546664228234</created>
@@ -599,11 +492,25 @@
       <option name="project" value="LOCAL" />
       <updated>1554776466173</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="PWA stuff, minus service worker">
+      <created>1555028066936</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1555028066936</updated>
+    </task>
+    <task id="LOCAL-00028" summary="new penalty thing">
+      <created>1555036199761</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1555036199761</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="255495000" />
+    <option name="totallyTimeSpent" value="259032000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="6" />
@@ -615,7 +522,7 @@
       <window_info id="npm" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32892805" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4983845" weight="0.32228917" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4983845" visible="true" weight="0.32228917" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26332796" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
@@ -658,7 +565,9 @@
     <MESSAGE value="message groups" />
     <MESSAGE value="message groups, mobile font" />
     <MESSAGE value="PWA stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="PWA stuff" />
+    <MESSAGE value="PWA stuff, minus service worker" />
+    <MESSAGE value="new penalty thing" />
+    <option name="LAST_COMMIT_MESSAGE" value="new penalty thing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -714,9 +623,6 @@
           <caret line="7" column="3" lean-forward="true" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/index.html">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/build/static/js/main.617f12ff.chunk.js" />
     <entry file="file://$PROJECT_DIR$/src/components/MovieTable.js">
@@ -875,13 +781,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/pages/Rules.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="67" column="35" selection-start-line="67" selection-start-column="35" selection-end-line="67" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/images/icons/icon-72x72.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -917,13 +816,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
@@ -954,13 +846,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="31" column="18" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/index.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -975,17 +860,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/pages/PastPredictions.js">
+    <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1060">
-          <caret line="70" selection-start-line="70" selection-end-line="70" />
+        <state relative-caret-position="-5049">
+          <caret line="109" selection-start-line="109" selection-end-line="109" />
+          <folding>
+            <element signature="n#!!block;n#constructor#0;n#App#0" />
+            <element signature="n#!!block;n#updateUser#0;n#App#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Movie.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="367" column="30" lean-forward="true" selection-start-line="367" selection-start-column="30" selection-end-line="367" selection-end-column="30" />
+        <state relative-caret-position="224">
+          <caret line="373" column="21" selection-start-line="373" selection-start-column="21" selection-end-line="373" selection-end-column="21" />
           <folding>
             <element signature="e#0#41#0" />
             <element signature="e#375#514#0" />
@@ -1084,21 +973,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
+    <entry file="file://$PROJECT_DIR$/src/components/pages/Rules.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5049">
-          <caret line="109" selection-start-line="109" selection-end-line="109" />
-          <folding>
-            <element signature="n#!!block;n#constructor#0;n#App#0" />
-            <element signature="n#!!block;n#updateUser#0;n#App#0" />
-          </folding>
+        <state relative-caret-position="294">
+          <caret line="79" column="57" selection-start-line="79" selection-start-column="57" selection-end-line="79" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/pages/PastPredictions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1835">
+          <caret line="35" column="37" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="36" column="19" lean-forward="true" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret column="4855" selection-start-column="4848" selection-end-column="4855" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="20" column="25" lean-forward="true" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+        <state relative-caret-position="227">
+          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
         </state>
       </provider>
     </entry>

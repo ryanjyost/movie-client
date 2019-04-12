@@ -76,7 +76,8 @@ const Rules = ({ styles }) => {
 
         <p style={textStyle}>
           <strong>If you forget to predict a movie</strong> before the lock-in
-          deadline, you get the worst possible personal score of 100%.
+          deadline, you get a penalty - 110% of the worst prediction's
+          difference to the actual Rotten Tomatoes Score.
         </p>
         <p style={textStyle}>
           <strong>Send a direct message to Movie Medium in GroupMe</strong> with
