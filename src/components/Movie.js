@@ -366,13 +366,13 @@ export default class Movie extends Component {
                   isPast && (
                     <span
                       style={{
-                        color: styles.black(0.3),
+                        color: styles.black(0.5),
                         margin: "0px 3px",
                         fontSize: 12,
                         fontWeight: "normal"
                       }}
                     >
-                      {isUser ? "were" : "was"}
+                      {didNotPredict ? "got a" : isUser ? "were" : "was"}
                     </span>
                   )}
                 {/*{!isRT && isPast && <span>{member.diff < 0 ? "-" : "+"}</span>}*/}
@@ -381,13 +381,13 @@ export default class Movie extends Component {
                   isPast && (
                     <span
                       style={{
-                        color: styles.black(0.3),
+                        color: styles.black(0.5),
                         margin: "0px 3px",
                         fontSize: 12,
                         fontWeight: "normal"
                       }}
                     >
-                      off
+                      {didNotPredict ? "penalty" : "off"}
                     </span>
                   )}
               </div>
