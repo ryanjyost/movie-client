@@ -1,8 +1,14 @@
 // config/sw.js
 module.exports = {
-  staticFileGlobs: ["build/**/*.js", "build/**/*.css", "build/index.html"],
-  navigateFallback: "/index.html",
-  // something like this should allow everything but files ending with `.zip`
-  navigateFallbackWhitelist: [/^(?!.*[.]zip$).*$/],
-  cacheId: "my-magical-cache-machine"
+  staticFileGlobs: ["build/static/css/**.css", "build/static/js/**.js"],
+  swFilePath: "./build/service-worker.js",
+  // templateFilePath: "./service-worker.tmpl",
+  // stripPrefix: "build/",
+  // handleFetch: false,
+  runtimeCaching: [
+    {
+      urlPattern: /this\\.is\\.a\\.regex/,
+      handler: "networkFirst"
+    }
+  ]
 };

@@ -333,10 +333,9 @@ export default class Movie extends Component {
           textColor = styles.black(0.5);
         }
 
-        const prediction =
-          member.prediction < 0 || member.prediction > 100
-            ? 101
-            : member.prediction;
+        const didNotPredict = member.prediction < 0 || member.prediction > 100;
+
+        const prediction = didNotPredict ? -1 : member.prediction;
 
         const rightNumber =
           member.prediction < 0 ? "No prediction" : `${prediction}%`;

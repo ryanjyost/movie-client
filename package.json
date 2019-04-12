@@ -28,7 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build-no-cache": "react-scripts build && sw-precache --root='build/' --config config/sw.js ",
+    "build-no-cache": "react-scripts build && sw-precache --config config/sw.js ",
     "deploy-staging": "aws s3 sync build/ s3://staging.moviemedium.io --delete",
     "deploy-prod-dangerous": "aws s3 sync build/ s3://moviemedium.io --delete",
     "test": "react-scripts test",
