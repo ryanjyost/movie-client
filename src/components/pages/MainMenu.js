@@ -120,6 +120,12 @@ class MainMenu extends Component {
           >
             Contact Me
           </a>
+          {this.props.user &&
+            this.props.user.isAdmin && (
+              <Link to={"/admin"} style={btnStyle} className={"hoverBtn"}>
+                Admin
+              </Link>
+            )}
         </div>
       </div>
     );

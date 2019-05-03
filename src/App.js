@@ -64,10 +64,11 @@ class App extends Component {
       user: null,
       didFetchUser: false
     };
+
+    this.deferredPrompt = null;
   }
 
-  componentDidMount() {
-    this.setState({ didMount: true });
+  handleUserOnMount() {
     if (Storage.get("userId")) {
       // get prev auth user
       let userId = Storage.get("userId");
@@ -93,20 +94,60 @@ class App extends Component {
     } else {
       this.setState({ didFetchUser: true });
     }
-    //   if (window.pathname.search) {
-    //     let accessToken = window.pathname.search.replace("?access_token=", "");
-    //     this.setState({ accessToken });
-    //     if (accessToken) {
-    //       axios
-    //         .post("http://localhost:8000/users/login", {
-    //           access_token: accessToken
-    //         })
-    //         .then(response => {
-    //           console.log(response);
-    //         })
-    //         .catch(e => console.log(e));
-    //     }
-    //   }
+  }
+
+  handleAddToHomescreen() {
+    if (!Storage.get("optedOutOfInstall")) {
+      window.addEventListener("beforeinstallprompt", e => {
+        const homeScreenContainer = document.querySelector(
+          ".addToHomeScreenContainer"
+        );
+
+        const homeScreenButton = document.querySelector(".addToHomeScreen");
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        this.deferredPrompt = e;
+
+        if (homeScreenContainer && this.state.user) {
+          homeScreenContainer.style.display = "flex";
+          homeScreenButton.addEventListener("click", e => {
+            homeScreenContainer.style.display = "none";
+            this.deferredPrompt.prompt();
+          });
+
+          this.deferredPrompt.userChoice.then(choiceResult => {
+            if (choiceResult.outcome === "accepted") {
+              console.log("User accepted the A2HS prompt");
+            } else {
+              console.log("User dismissed the A2HS prompt");
+              homeScreenContainer.style.display = "none";
+              Storage.set("optedOutOfInstall", true);
+            }
+            this.deferredPrompt = null;
+          });
+        }
+      });
+    }
+  }
+
+  handleHomeScreenReject() {
+    const homeScreenContainer = document.querySelector(
+      ".addToHomeScreenContainer"
+    );
+    homeScreenContainer.style.display = "none";
+    Storage.set("optedOutOfInstall", true);
+  }
+
+  componentDidMount() {
+    this.setState({ didMount: true });
+
+    this.handleUserOnMount();
+    this.handleAddToHomescreen();
+
+    window.YTConfig = {
+      host: "https://youtube.com"
+    };
   }
 
   updateUser(user) {
@@ -135,7 +176,7 @@ class App extends Component {
     const menuItems = [
       {
         link: "/rankings",
-        label: "Rankings",
+        label: "Scoreboard",
         isActive: ["/rankings"].indexOf(`${pathname}`) > -1
       },
       {
@@ -250,7 +291,7 @@ class App extends Component {
       return (
         <div
           style={{
-            height: 36,
+            height: styles.footerHeight,
             width: "100%",
             backgroundColor: styles.primary(1),
             position: "fixed",
@@ -316,6 +357,50 @@ class App extends Component {
       );
     };
 
+    const renderAddToHomeScreen = () => {
+      return (
+        <div
+          style={{
+            position: "fixed",
+            bottom: -1,
+            height: 70,
+            width: "100%",
+            zIndex: 10,
+            backgroundColor: "#fff",
+            display: "none",
+            // flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-between",
+            border: "1px solid #fff",
+            borderTop: "1px solid #e5e5e5",
+            padding: "0px 20px"
+          }}
+          className={"addToHomeScreenContainer"}
+        >
+          <button
+            className={"addToHomeScreen"}
+            style={{
+              backgroundColor: styles.primary(),
+              border: `1px solid ${styles.primary()}`,
+              color: "#fff",
+              borderRadius: 3,
+              fontSize: 16,
+              padding: "5px 20px"
+            }}
+          >
+            Add to Home Screen
+          </button>
+          <a
+            style={{ color: styles.black(0.5), cursor: "pointer" }}
+            onClick={() => this.handleHomeScreenReject()}
+          >
+            No thanks
+          </a>
+        </div>
+      );
+    };
+
+    // stll looking for user?
     if (!this.state.didFetchUser) {
       return <LoadingScreen styles={styles} />;
     }
@@ -349,7 +434,9 @@ class App extends Component {
           <Route
             path="/menu"
             exact
-            render={props => <MainMenu {...props} styles={styles} />}
+            render={props => (
+              <MainMenu {...props} styles={styles} user={user} />
+            )}
           />
 
           {/* Terms */}
@@ -495,6 +582,9 @@ class App extends Component {
           <Route render={props => <Redirect to={"/"} />} />
         </Switch>
         {isApp ? renderAppFooter() : null}
+
+        {/* Add to Homescreen*/}
+        {renderAddToHomeScreen()}
       </div>
     );
   }
