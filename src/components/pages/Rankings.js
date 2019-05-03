@@ -184,7 +184,7 @@ export default class Rankings extends Component {
                   style={{
                     flex: 1,
                     textAlign: "right",
-                    fontWeight: !isMM ? "bold" : "normal",
+                    fontWeight: "normal",
                     fontStyle: isMM ? "italic" : "normal",
                     color: textColor,
                     display: "flex",
@@ -195,10 +195,12 @@ export default class Rankings extends Component {
                   }}
                 >
                   <span>
-                    {member.numMoviesUserPredicted < 1
-                      ? "None yet"
-                      : member.avgDiff}
-                    {member.numMoviesUserPredicted < 1 ? "" : "%"}
+                    <strong>
+                      {member.numMoviesUserPredicted < 1
+                        ? "None yet"
+                        : member.avgDiff}
+                      {member.numMoviesUserPredicted < 1 ? "" : "%"}
+                    </strong>
                   </span>
                   <span style={{ fontSize: 10, opacity: 0.8 }}>
                     based on {member.numMoviesUserPredicted} movies

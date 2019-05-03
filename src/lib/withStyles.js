@@ -34,6 +34,7 @@ const withStyles = Comp => {
         isWide: windowWidth > 768,
         predictionMenuHeight: 26,
         appHeaderHeight: 40,
+        footerHeight: 36,
         white: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
         primary: (opacity = 1) => `rgba(85, 88, 255, ${opacity})`,

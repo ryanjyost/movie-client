@@ -3,7 +3,7 @@
   "short_name": "MM",
   "theme_color": "#5558ff",
   "background_color": "#5558ff",
-  "display": "minimal-ui",
+  "display": "standalone",
   "orientation": "portrait",
   "Scope": "/",
   "start_url": "/",
