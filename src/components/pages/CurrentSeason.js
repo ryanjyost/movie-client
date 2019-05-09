@@ -6,7 +6,7 @@ import { Redirect } from "react-router-dom";
 import Loader from "../Loader";
 import { getNameAbbr } from "../../lib/helpers";
 
-export default class Rankings extends Component {
+export default class CurrentSeason extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,7 +41,7 @@ export default class Rankings extends Component {
       .get(
         `${process.env.REACT_APP_API_URL ||
           "https://predict-movies-prod.herokuapp.com"}/groups/${groupId ||
-          "all"}/rankings`
+          "all"}/rankings/recent`
       )
       .then(response => {
         if (response.data) {

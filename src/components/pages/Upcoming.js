@@ -112,7 +112,13 @@ class Upcoming extends Component {
   }
 
   render() {
-    const { styles } = this.props;
+    const { styles, user } = this.props;
+
+    const moviesThatNeedPrediction = this.props.user
+      ? this.state.movies.filter(movie => {
+          return !(movie._id in user.votes);
+        })
+      : [];
 
     return (
       <div
@@ -126,6 +132,19 @@ class Upcoming extends Component {
           margin: "auto"
         }}
       >
+        {moviesThatNeedPrediction.length ? (
+          <h4
+            style={{
+              marginBottom: 10,
+              color: styles.secondary(),
+              fontWeight: "bold"
+            }}
+          >{`${moviesThatNeedPrediction.length} ${
+            moviesThatNeedPrediction.length === 1 ? "movie" : "movies"
+          } ${
+            moviesThatNeedPrediction.length === 1 ? "needs" : "need"
+          } your prediction! `}</h4>
+        ) : null}
         <h5
           style={{
             textAlign: "center",

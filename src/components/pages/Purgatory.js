@@ -100,6 +100,18 @@ class Purgatory extends Component {
           margin: "auto"
         }}
       >
+        <h5
+          style={{
+            textAlign: "center",
+            // fontWeight: "bold",
+            color: styles.primary(0.7)
+          }}
+        >
+          Predictions are locked in. Waiting for the RT score...
+        </h5>
+        <h5 style={{ margin: "10px 0px 20px 0px", color: styles.primary(0.4) }}>
+          &darr;
+        </h5>
         {this.props.user &&
           this.props.user.groups.length > 1 && (
             <div
@@ -117,18 +129,6 @@ class Purgatory extends Component {
               />
             </div>
           )}
-        <h5
-          style={{
-            textAlign: "center",
-            // fontWeight: "bold",
-            color: styles.primary(0.7)
-          }}
-        >
-          Predictions are locked in. Waiting for the RT score...
-        </h5>
-        <h5 style={{ margin: "10px 0px 20px 0px", color: styles.primary(0.4) }}>
-          &darr;
-        </h5>
         {this.state.movies.map((movie, i) => {
           return (
             <Movie

@@ -14,3 +14,7 @@ export const sortArrayByProperty = (array, property, asc = false) => {
     }
   });
 };
+
+export const getNameAbbr = name => {
+  return `${name.split(" ")[0]} ${name.split(" ")[1][0]}.`;
+};

@@ -10,16 +10,19 @@ import {
 import withStyles from "./lib/withStyles";
 import Storage from "store";
 
-import Upcoming from "./components/pages/Upcoming";
+import LoadingScreen from "./components/LoadingScreen";
 import Admin from "./components/pages/Admin";
+import AuthRedirect from "./components/pages/AuthRedirect";
+
 import Home from "./components/pages/Home";
+import Upcoming from "./components/pages/Upcoming";
 import Purgatory from "./components/pages/Purgatory";
 import PastPredictions from "./components/pages/PastPredictions";
 import Onboarding from "./components/pages/Onboarding";
-import AuthRedirect from "./components/pages/AuthRedirect";
 import Rules from "./components/pages/Rules";
-import LoadingScreen from "./components/LoadingScreen";
+import Seasons from "./components/pages/Seasons";
 import Rankings from "./components/pages/Rankings";
+import CurrentSeason from "./components/pages/CurrentSeason";
 import TermsOfUse from "./components/pages/TermsOfUse";
 import Privacy from "./components/pages/Privacy";
 import MainMenu from "./components/pages/MainMenu";
@@ -162,22 +165,24 @@ class App extends Component {
     const isApp =
       user &&
       user.groups.length &&
-      ["/upcoming", "/purgatory", "/past", "/rankings", "/rules"].indexOf(
-        `${pathname}`
-      ) > -1;
+      [
+        "/upcoming",
+        "/purgatory",
+        "/past",
+        "/seasons",
+        "/current",
+        "/rankings",
+        "/rules"
+      ].indexOf(`${pathname}`) > -1;
 
-    const showPredictionMenu =
-      (pathname === "/upcoming" ||
-        pathname === "/purgatory" ||
-        pathname === "/past") &&
-      user &&
-      user.groups.length;
+    const hasUserWithGroup = user && user.groups.length;
 
     const menuItems = [
       {
-        link: "/rankings",
-        label: "Scoreboard",
-        isActive: ["/rankings"].indexOf(`${pathname}`) > -1
+        link: "/seasons",
+        label: "Leaderboard",
+        isActive:
+          ["/seasons", "/rankings", "/current"].indexOf(`${pathname}`) > -1
       },
       {
         link: "/upcoming",
@@ -192,7 +197,7 @@ class App extends Component {
       }
     ];
 
-    const renderLink = (link, label) => {
+    const renderLink = (link, label, index, list) => {
       const isActive = pathname === link;
 
       const linkStyle = {
@@ -205,19 +210,28 @@ class App extends Component {
 
       return (
         <Link
+          key={link}
           to={link}
           style={{
             ...linkStyle,
             ...{
-              fontWeight: "bold",
-              backgroundColor: !isActive ? styles.white() : styles.primary(1),
-              color: !isActive ? styles.primary() : styles.white(),
+              // fontWeight: isActive ? "bold" : "normal",
+              backgroundColor: !isActive ? styles.white() : styles.secondary(1),
+              color: !isActive ? styles.secondary() : styles.white(),
               textDecoration: "none",
-              border: `1px solid ${styles.primary(1)}`,
+              border: `1px solid ${styles.secondary(1)}`,
               borderRight:
-                link === "/purgatory" ? null : `1px solid ${styles.primary(1)}`,
+                list.length === 3
+                  ? index === 1
+                    ? null
+                    : `1px solid ${styles.secondary(1)}`
+                  : `1px solid ${styles.secondary(1)}`,
               borderLeft:
-                link === "/purgatory" ? null : `1px solid ${styles.primary(1)}`
+                list.length === 3
+                  ? index === 1
+                    ? null
+                    : `1px solid ${styles.secondary(1)}`
+                  : `1px solid ${styles.secondary(1)}`
             }
           }}
         >
@@ -322,14 +336,32 @@ class App extends Component {
       );
     };
 
-    const renderPredictionMenu = () => {
+    const renderSubMenu = () => {
+      const menus = [
+        [
+          { link: "/upcoming", title: "Upcoming" },
+          { link: "/purgatory", title: "Purgatory" },
+          { link: "/past", title: "Past" }
+        ],
+        [
+          { link: "/current", title: "Current Season" },
+          { link: "/seasons", title: "Past Seasons" },
+          { link: "/rankings", title: "Overall Rankings" }
+        ]
+      ];
+
+      const currentSubMenu = menus.find(menu => {
+        return menu.find(item => pathname === item.link);
+      });
+
+      if (!currentSubMenu || !hasUserWithGroup) return null;
       return (
         <div
           style={{
             width: "100%",
             padding: "10px 0px",
             backgroundColor: styles.white(),
-            borderBottom: `1px solid ${styles.black(0.1)}`
+            borderBottom: `1px solid ${styles.black(0.2)}`
           }}
         >
           <div
@@ -341,17 +373,15 @@ class App extends Component {
               margin: "auto",
               maxWidth: 500,
               alignItems: "stretch",
-              // border: `1px solid ${styles.primary(1)}`,
-              // position: "fixed",
-              // bottom: 0,
+
               height: styles.predictionMenuHeight,
               backgroundColor: styles.white()
-              // borderTop: `1px solid ${styles.black(0.1)}`
             }}
           >
-            {renderLink("/upcoming", "Upcoming")}
-            {renderLink("/purgatory", " Purgatory")}
-            {renderLink("/past", "Past")}
+            {currentSubMenu &&
+              currentSubMenu.map((item, i) =>
+                renderLink(item.link, item.title, i, currentSubMenu)
+              )}
           </div>
         </div>
       );
@@ -400,7 +430,7 @@ class App extends Component {
       );
     };
 
-    // stll looking for user?
+    // still looking for user?
     if (!this.state.didFetchUser) {
       return <LoadingScreen styles={styles} />;
     }
@@ -414,7 +444,7 @@ class App extends Component {
       >
         <div style={{ position: "fixed", top: 0, width: "100%", zIndex: 1 }}>
           {isApp ? renderAppHeader() : null}
-          {showPredictionMenu ? renderPredictionMenu() : null}
+          {renderSubMenu()}
         </div>
         <Switch>
           {/* HOME */}
@@ -484,6 +514,21 @@ class App extends Component {
             }
           />
 
+          {/* Seasons */}
+          <Route
+            path="/seasons"
+            exact
+            render={props =>
+              renderAuthRoute(
+                Seasons,
+                props,
+                user,
+                this.updateUser.bind(this),
+                styles
+              )
+            }
+          />
+
           {/* RANKINGS */}
           <Route
             path="/rankings"
@@ -491,6 +536,21 @@ class App extends Component {
             render={props =>
               renderAuthRoute(
                 Rankings,
+                props,
+                user,
+                this.updateUser.bind(this),
+                styles
+              )
+            }
+          />
+
+          {/* Current Season */}
+          <Route
+            path="/current"
+            exact
+            render={props =>
+              renderAuthRoute(
+                CurrentSeason,
                 props,
                 user,
                 this.updateUser.bind(this),

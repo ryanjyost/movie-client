@@ -317,6 +317,9 @@ export default class Movie extends Component {
 
       const renderSingle = (member, i = 1) => {
         const isMM = member.name === "Movie Medium";
+
+        if (isMM) return null;
+
         const isUser = member.id === user._id;
         const isRT = member.name === "Rotten Tomatoes Score";
 
@@ -466,8 +469,10 @@ export default class Movie extends Component {
           alignItems: "center",
           marginBottom: styles.isWide ? 50 : 30,
           backgroundColor: styles.white(),
-          borderTop: `1px solid ${styles.black(0.05)}`,
-          borderBottom: `1px solid ${styles.black(0.05)}`
+          border: `1px solid ${styles.black(0.1)}`,
+          borderRadius: 3
+          // borderTop: `1px solid ${styles.black(0.05)}`,
+          // borderBottom: `1px solid ${styles.black(0.05)}`
         }}
       >
         {showTrailer && renderVideo(this.youtube_parser(movie.trailer))}

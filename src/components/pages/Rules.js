@@ -5,7 +5,8 @@ const Rules = ({ styles }) => {
   const textStyle = {
     lineHeight: 1.4,
     color: styles.black(0.7),
-    margin: "10px 0px"
+    margin: "15px 0px 15px 0px",
+    fontSize: 16
   };
 
   return (
@@ -16,20 +17,10 @@ const Rules = ({ styles }) => {
         alignItems: "center",
         width: "100%",
         maxWidth: 500,
-        padding: "100px 0px",
+        padding: "80px 0px",
         margin: "auto"
       }}
     >
-      <h2
-        style={{
-          textAlign: "center",
-          fontWeight: "bold",
-          color: styles.primary(1),
-          marginBottom: 0
-        }}
-      >
-        How to Play
-      </h2>
       <div
         style={{
           display: "flex",
@@ -41,14 +32,45 @@ const Rules = ({ styles }) => {
         }}
       >
         <p style={textStyle}>
-          <strong>
-            Invite more friends to play via your GroupMe chat at any time.
-          </strong>
-        </p>
-        <p style={textStyle}>
           <strong>Objective:</strong> Predict the Rotten Tomatoes Scores of
           upcoming movies more accurately than your friends.
         </p>
+
+        <p style={textStyle}>
+          <strong>How to win:</strong> Have the lowest average{" "}
+          <strong>
+            <i>Movie Medium Metric</i>
+          </strong>{" "}
+          over time.
+        </p>
+
+        <p style={textStyle}>
+          <strong>Movie Medium Metric =</strong> how many percentage points off
+          your prediction was from the actual RT Score.{" "}
+        </p>
+
+        <p style={textStyle}>
+          <strong>For example,</strong> you predict 50%. The RT Score ends up
+          being 70%. Your MM Metric for that movie is 20%.
+        </p>
+
+        <p style={textStyle}>
+          <strong>Seasons are 10 movies long.</strong>Whoever has the lowest
+          average MM Metric for the 10 movies wins the season.
+        </p>
+
+        <p style={textStyle}>
+          <strong>Predictions are locked-in</strong> exactly two weeks before
+          the release date of the movie, or when the movie gets more than 5
+          reviews. Whichever comes first.
+        </p>
+
+        <p style={textStyle}>
+          <strong>If you forget to predict a movie</strong> before the lock-in
+          deadline, you get a penalty... 110% of the worst MM Metric in your
+          group.
+        </p>
+
         <div style={textStyle}>
           <strong> All Movie Medium groups are linked to a GroupMe chat</strong>,
           where you...
@@ -62,22 +84,18 @@ const Rules = ({ styles }) => {
             <span>...stay in touch with the players in your group</span>
           </div>
         </div>
+
         <p style={textStyle}>
           <strong>
             Use the app at <a href="https://moviemedium.io">moviemedium.io</a>{" "}
           </strong>to manage predictions and see more detailed game info like
           past movie results and group rankings.
         </p>
-        <p style={textStyle}>
-          <strong>Predictions are locked-in</strong> exactly two weeks before
-          the release date of the movie, or when the movie gets more than 5
-          reviews. Whichever comes first!
-        </p>
 
         <p style={textStyle}>
-          <strong>If you forget to predict a movie</strong> before the lock-in
-          deadline, you get a penalty - 110% of the worst prediction's
-          difference to the actual Rotten Tomatoes Score.
+          <strong>
+            Invite more friends to play via your GroupMe chat at any time.
+          </strong>
         </p>
         <p style={textStyle}>
           <strong>Send a direct message to Movie Medium in GroupMe</strong> with

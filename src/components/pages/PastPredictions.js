@@ -8,9 +8,14 @@ class PastPredictions extends Component {
     super(props);
     this.state = {
       movies: [],
+      filteredMovies: [],
       predictionBreakdowns: null,
       group: null,
-      selectedGroup: null
+      selectedGroup: null,
+      seasons: [],
+      selectedSeason: { value: 0, label: "All Seasons" },
+      seasonInfo: null,
+      seasonOptions: []
     };
   }
 
@@ -40,12 +45,14 @@ class PastPredictions extends Component {
           }
         });
         this.setState({
-          movies: sorted
+          movies: sorted,
+          filteredMovies: sorted
         });
       })
       .catch(e => console.log(e));
 
     this.getGroupBreakdowns(this.props.user.groups[0]._id);
+    this.getSeasons();
   }
 
   getGroupBreakdowns(groupId) {
@@ -56,6 +63,31 @@ class PastPredictions extends Component {
       )
       .then(response => {
         this.setState({ predictionBreakdowns: response.data.breakdowns });
+      })
+      .catch(e => console.log(e));
+  }
+
+  getSeasons() {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL ||
+          "https://predict-movies-prod.herokuapp.com"}/seasons`
+      )
+      .then(response => {
+        if (response.data) {
+          const seasonOptions = response.data.seasons.map(season => {
+            return { value: season.id, label: `Season ${season.id}` };
+          });
+          seasonOptions.unshift({ value: 0, label: "All Seasons" });
+          this.setState({
+            seasons: response.data.seasons,
+            selectedSeason: {
+              value: 0,
+              label: `All Seasons`
+            },
+            seasonOptions
+          });
+        }
       })
       .catch(e => console.log(e));
   }
@@ -80,6 +112,23 @@ class PastPredictions extends Component {
     this.getGroupBreakdowns(option.value);
   }
 
+  handleSelectSeason(option) {
+    const seasonInfo = this.state.seasons.find(
+      season => season.id === option.value
+    );
+
+    const movies = this.state.movies.filter(movie => {
+      if (!option.value) return true;
+      return option.value === movie.season;
+    });
+
+    this.setState({
+      selectedSeason: option,
+      seasonInfo,
+      filteredMovies: movies
+    });
+  }
+
   render() {
     const { user, styles } = this.props;
     const { selectedGroup } = this.state;
@@ -100,23 +149,6 @@ class PastPredictions extends Component {
           margin: "auto"
         }}
       >
-        {this.props.user &&
-          this.props.user.groups.length > 1 && (
-            <div
-              style={{
-                width: 400,
-                maxWidth: "100%",
-                marginBottom: 20,
-                padding: "0px 20px"
-              }}
-            >
-              <Select
-                options={options}
-                value={selectedGroup || { label: "", value: null }}
-                onChange={option => this.handleSelect(option)}
-              />
-            </div>
-          )}
         <h5
           style={{
             textAlign: "center",
@@ -124,12 +156,35 @@ class PastPredictions extends Component {
             color: styles.primary(0.7)
           }}
         >
-          See your past predictions and scores
+          View past movie results and seasons
         </h5>
         <h5 style={{ margin: "10px 0px 20px 0px", color: styles.primary(0.4) }}>
           &darr;
         </h5>
-        {this.state.movies.map((movie, i) => {
+        <div
+          style={{
+            width: 400,
+            maxWidth: "100%",
+            marginBottom: 20,
+            padding: "0px 20px"
+          }}
+        >
+          <Select
+            options={this.state.seasonOptions}
+            value={this.state.selectedSeason || { label: "", value: null }}
+            onChange={option => this.handleSelectSeason(option)}
+          />
+          <div style={{ height: 10, width: "100%" }} />
+          {this.props.user &&
+            this.props.user.groups.length > 1 && (
+              <Select
+                options={options}
+                value={selectedGroup || { label: "", value: null }}
+                onChange={option => this.handleSelect(option)}
+              />
+            )}
+        </div>
+        {this.state.filteredMovies.map((movie, i) => {
           return (
             <Movie
               isPast

@@ -24,7 +24,6 @@ code {
     monospace;
 }
 
-
 .spinnerContainer {
   position:relative;
   width: 150px;
@@ -46,6 +45,11 @@ code {
   border: 74px rgba(85, 88, 255,1) solid;
   border-top: 74px rgba(255, 255, 255,1) solid;
   border-radius: 50%;
+  -webkit-animation: spCircRot 0.8s infinite linear;
+  animation: spCircRot 0.8s infinite linear;
+}
+
+.sp-circle-no-style {
   -webkit-animation: spCircRot 0.8s infinite linear;
   animation: spCircRot 0.8s infinite linear;
 }
