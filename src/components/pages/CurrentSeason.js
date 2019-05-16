@@ -12,7 +12,15 @@ export default class CurrentSeason extends Component {
     this.state = {
       rankings: [],
       selectedGroup: null,
-      didMount: false
+      didMount: false,
+      seasons: [],
+      recentSeason: null,
+      seasonInfo: null,
+      selectedSeason: {
+        value: 0,
+        label: `All Seasons`
+      },
+      seasonOptions: []
     };
   }
 
@@ -31,9 +39,38 @@ export default class CurrentSeason extends Component {
           ? this.props.user.groups[0]._id
           : this.props.user.groups[0]
       );
+
+      this.getSeasons();
     }
 
     this.setState({ didMount: true });
+  }
+
+  getSeasons() {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL ||
+          "https://predict-movies-prod.herokuapp.com"}/seasons`
+      )
+      .then(response => {
+        if (response.data) {
+          const seasonOptions = response.data.seasons.map(season => {
+            return { value: season.id, label: `Season ${season.id}` };
+          });
+          seasonOptions.unshift({ value: 0, label: "All Seasons" });
+          this.setState({
+            seasons: response.data.seasons,
+            recentSeason: response.data.seasons[0],
+            seasonInfo: response.data.seasons[0],
+            selectedSeason: {
+              value: 0,
+              label: `All Seasons`
+            },
+            seasonOptions
+          });
+        }
+      })
+      .catch(e => console.log(e));
   }
 
   getRankings(groupId) {
@@ -73,7 +110,7 @@ export default class CurrentSeason extends Component {
 
   render() {
     const { styles, user } = this.props;
-    const { selectedGroup } = this.state;
+    const { selectedGroup, seasonInfo } = this.state;
 
     const showLoader =
       !this.state.didMount ||
@@ -91,6 +128,12 @@ export default class CurrentSeason extends Component {
     });
     options.push({ value: 0, label: "ALL MOVIE MEDIUM PLAYERS" });
 
+    const seasonIsOver = seasonInfo
+      ? seasonInfo.length === seasonInfo.movies.length
+      : false;
+
+    const emojiMap = [`🥇`, `🥈`, `🥉`];
+
     return (
       <div
         style={{
@@ -103,27 +146,58 @@ export default class CurrentSeason extends Component {
           margin: "auto"
         }}
       >
-        {/*<div*/}
-        {/*style={{*/}
-        {/*padding: "5px 0px 5px 0px",*/}
-        {/*// display: "flex",*/}
-        {/*// alignItems: "center",*/}
-        {/*// justifyContent: "center",*/}
-        {/*marginBottom: 20,*/}
-        {/*color: styles.primary(0.9),*/}
-        {/*textAlign: "center"*/}
-        {/*}}*/}
-        {/*>*/}
-        {/*<h4 style={{ marginBottom: 5, fontSize: 16 }}>*/}
-        {/*<strong>These are overall Movie Medium rankings.</strong>*/}
-        {/*</h4>*/}
-
-        {/*<h6>*/}
-        {/*<i>*/}
-        {/*MM Metric = how far off a player's predictions are, on average.*/}
-        {/*</i>*/}
-        {/*</h6>*/}
-        {/*</div>*/}
+        {seasonInfo && (
+          <div
+            style={{
+              padding: "5px 0px 5px 0px",
+              // display: "flex",
+              // alignItems: "center",
+              // justifyContent: "center",
+              marginBottom: 20,
+              color: styles.primary(0.9),
+              textAlign: "center"
+            }}
+          >
+            <h4 style={{ opacity: 0.9 }}>
+              <span style={{ color: styles.primary(0.5) }}>
+                {seasonIsOver
+                  ? "Final Results for "
+                  : `${seasonInfo.length -
+                      seasonInfo.movies.length} movies left in `}
+              </span>
+              <strong>{`Season ${seasonInfo.id}`}</strong>{" "}
+            </h4>
+            {/*<div*/}
+            {/*style={{*/}
+            {/*marginTop: 10,*/}
+            {/*color: styles.black(0.7),*/}
+            {/*width: "100%",*/}
+            {/*display: "flex",*/}
+            {/*flexWrap: "wrap",*/}
+            {/*justifyContent: "center"*/}
+            {/*}}*/}
+            {/*>*/}
+            {/*{seasonInfo.movies.map(movie => {*/}
+            {/*return (*/}
+            {/*<span*/}
+            {/*style={{*/}
+            {/*margin: 3,*/}
+            {/*fontSize: 12,*/}
+            {/*padding: "3px 6px",*/}
+            {/*fontWeight: "bold",*/}
+            {/*backgroundColor: styles.primary(0.6),*/}
+            {/*borderRadius: 3,*/}
+            {/*// border: `1px solid ${styles.primary(0.5)}`,*/}
+            {/*color: styles.white(1)*/}
+            {/*}}*/}
+            {/*>*/}
+            {/*{movie.title}*/}
+            {/*</span>*/}
+            {/*);*/}
+            {/*})}*/}
+            {/*</div>*/}
+          </div>
+        )}
 
         {showLoader ? (
           <div style={{ marginTop: 50 }}>
@@ -175,8 +249,8 @@ export default class CurrentSeason extends Component {
             </div>
             {this.state.rankings.map((member, i) => {
               const isUser = member.id === user._id;
-              const isMM = member.name === "Movie Medium";
 
+              const isMM = member.name === "Movie Medium";
               if (isMM) return null;
 
               let strokeColor = styles.black(0.3),
@@ -218,9 +292,10 @@ export default class CurrentSeason extends Component {
                         alignItems: "center"
                       }}
                     >
-                      {member.user.isMM
-                        ? member.name
-                        : getNameAbbr(member.name)}
+                      <span style={{ fontSize: 20 }}>
+                        {(seasonIsOver && emojiMap[i]) || ""}
+                      </span>
+                      {getNameAbbr(member.name)}
                     </div>
                     <div
                       style={{
@@ -236,16 +311,22 @@ export default class CurrentSeason extends Component {
                         fontSize: member.prediction < 0 ? 12 : 16
                       }}
                     >
-                      <span>
-                        <strong>
-                          {member.moviesInCalc < 1
-                            ? "None yet"
-                            : member.avgDiff}
-                          {member.moviesInCalc < 1 ? "" : "%"}
-                        </strong>
-                      </span>
+                      {member.notInSeason ? (
+                        <strong>N/A</strong>
+                      ) : (
+                        <span>
+                          <strong>
+                            {member.moviesInCalc < 1
+                              ? "None yet"
+                              : member.avgDiff}
+                            {member.moviesInCalc < 1 ? "" : "%"}
+                          </strong>
+                        </span>
+                      )}
                       <span style={{ fontSize: 10, opacity: 0.8 }}>
-                        based on {member.moviesInCalc} movies
+                        {member.notInSeason
+                          ? "Player will be in next season"
+                          : `based on ${member.moviesInCalc} movies`}
                       </span>
                     </div>
                   </div>

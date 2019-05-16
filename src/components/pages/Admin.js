@@ -22,7 +22,7 @@ class Admin extends Component {
       trailer: "",
       rtLink: "",
       rtScore: -1,
-      releaseDate: moment(),
+      releaseDate: moment.utc().startOf("day"),
       isClosed: 0,
 
       movies: [],
@@ -54,7 +54,7 @@ class Admin extends Component {
       trailer: movie.trailer,
       rtLink: movie.rtLink,
       rtScore: movie.rtScore,
-      releaseDate: moment(movie.releaseDate * 1000),
+      releaseDate: moment(movie.releaseDate * 1000).utc(),
       isClosed: "isClosed" in movie ? movie.isClosed : 0,
       isEdit: true
     });
@@ -176,7 +176,9 @@ class Admin extends Component {
           Header: "Release",
           accessor: "releaseDate",
           Cell: row => {
-            return moment(row.value * 1000).format("MM/DD/YYYY");
+            return moment(row.value * 1000)
+              .utc()
+              .format("MM/DD/YYYY");
           }
         },
         {
@@ -266,7 +268,7 @@ class Admin extends Component {
           </Checkbox>
           <div style={{ width: "100%" }}>
             <FormGroup>
-              <ControlLabel>Release Date</ControlLabel>
+              <ControlLabel>Release Date (UTC)</ControlLabel>
               <DateTime
                 value={this.state.releaseDate}
                 onChange={e => this.setState({ releaseDate: e })}

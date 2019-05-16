@@ -84,23 +84,58 @@ export default class Movie extends Component {
   }
 
   generateReleaseText(releaseDateUnix) {
-    const daysUntilCutoff = moment
-      .unix(releaseDateUnix)
-      .diff(moment.unix(this.props.moviePredictionCutoffDate), "days");
+    const releaseDate = moment.unix(releaseDateUnix).utc();
+    const cutoffDate = moment.unix(this.props.moviePredictionCutoffDate).utc();
+
+    // console.log("================");
+    // console.log(
+    //   "CURRENT",
+    //   moment.utc().format("dddd, MMMM Do YYYY, h:mm:ss a Z")
+    // );
+    // console.log(
+    //   "+14",
+    //   moment
+    //     .utc()
+    //     .add(14, "days")
+    //     .format("dddd, MMMM Do YYYY, h:mm:ss a Z")
+    // );
+    // console.log("CUTOFF", cutoffDate.format("dddd, MMMM Do YYYY, h:mm:ss a Z"));
+    // console.log(
+    //   "RELEASE",
+    //   releaseDate.format("dddd, MMMM Do YYYY, h:mm:ss a Z")
+    // );
+    //
+    const timeUnitsUntilCutoff = unit => {
+      return cutoffDate.diff(
+        moment
+          .utc()
+          .add(14, "days")
+          .utc(),
+        unit
+      );
+    };
+
+    const daysUntilCutoff = releaseDate.diff(cutoffDate, "days");
 
     if (daysUntilCutoff > 0) {
       return `${daysUntilCutoff} day${daysUntilCutoff === 1 ? "" : "s"}`;
     }
 
-    const hoursUntilCutoff = moment()
-      .endOf("day")
-      .diff(moment(), "hours");
+    const hoursUntilCutoff = timeUnitsUntilCutoff("hours");
 
     if (hoursUntilCutoff > 0) {
       return `${hoursUntilCutoff} hour${hoursUntilCutoff === 1 ? "" : "s"}`;
     }
 
-    return `< 1 hour!`;
+    const minutesUntilCutoff = timeUnitsUntilCutoff("minutes");
+
+    if (minutesUntilCutoff > 0) {
+      return `${Math.round(minutesUntilCutoff)} minutes${
+        minutesUntilCutoff === 1 ? "" : "s"
+      }`;
+    }
+
+    return `1 minute`;
   }
 
   render() {
@@ -117,7 +152,10 @@ export default class Movie extends Component {
     } = this.props;
     const { videoReady } = this.state;
 
-    const releaseCountdownText = this.generateReleaseText(movie.releaseDate);
+    const releaseCountdownText =
+      !isPast && !isPurgatory
+        ? this.generateReleaseText(movie.releaseDate)
+        : "";
 
     const renderVideo = video => {
       const width = Math.min(styles.windowWidth, 500);
@@ -515,7 +553,7 @@ export default class Movie extends Component {
               <span>🎥</span>
               {/*<strong>{daysUntilRelease} days</strong>{" "}*/}
               <span style={{ color: "#888", marginLeft: 2 }}>
-                {moment(movie.releaseDate * 1000).format("MMM DD, YYYY")}
+                {moment.unix(movie.releaseDate).format("MMM DD, YYYY")}
               </span>
             </h6>
 
