@@ -126,13 +126,23 @@ export default class Seasons extends Component {
     let data = {};
 
     for (let season of seasons) {
-      let winner = season.winnerMap[groupInfo._id];
-
-      if (winner) {
-        if (winner in data) {
-          data[winner] = data[winner] + 1;
+      let winners = season.winnerMap[groupInfo._id];
+      if (winners) {
+        if (Array.isArray(winners)) {
+          for (let winner of winners) {
+            if (winner in data) {
+              data[winner] = data[winner] + 1;
+            } else {
+              data[winner] = 1;
+            }
+          }
         } else {
-          data[winner] = 1;
+          let winner = winners;
+          if (winner in data) {
+            data[winner] = data[winner] + 1;
+          } else {
+            data[winner] = 1;
+          }
         }
       }
     }
