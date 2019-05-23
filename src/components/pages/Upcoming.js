@@ -149,7 +149,8 @@ class Upcoming extends Component {
           style={{
             textAlign: "center",
             // fontWeight: "bold",
-            color: styles.primary(0.7)
+            color: styles.primary(0.7),
+            padding: "0px 20px"
           }}
         >
           Predict the Rotten Tomatoes Scores of upcoming movies

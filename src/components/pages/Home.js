@@ -200,7 +200,11 @@ class Home extends Component {
           <Link to={"/privacy"} style={btnStyle}>
             Privacy Policy
           </Link>
-          <a href={"mailto:ryanjyost@gmail.com"} style={btnStyle}>
+          <a
+            href={"mailto:ryanjyost@gmail.com"}
+            style={btnStyle}
+            target={"_blank"}
+          >
             Contact Me
           </a>
         </div>

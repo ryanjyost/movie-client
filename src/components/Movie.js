@@ -130,7 +130,7 @@ export default class Movie extends Component {
     const minutesUntilCutoff = timeUnitsUntilCutoff("minutes");
 
     if (minutesUntilCutoff > 0) {
-      return `${Math.round(minutesUntilCutoff)} minutes${
+      return `${Math.round(minutesUntilCutoff)} minute${
         minutesUntilCutoff === 1 ? "" : "s"
       }`;
     }
@@ -559,7 +559,11 @@ export default class Movie extends Component {
 
             <h6 style={{ margin: "5px 10px 5px 0px" }}>
               <span>🍅</span>
-              <a style={{ marginLeft: 2 }} href={movie.rtLink}>
+              <a
+                style={{ marginLeft: 2 }}
+                href={movie.rtLink}
+                target={"_blank"}
+              >
                 View on Rotten Tomatoes
               </a>
             </h6>
