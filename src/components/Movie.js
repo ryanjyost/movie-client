@@ -17,16 +17,6 @@ export default class Movie extends Component {
     };
   }
 
-  componentDidMount() {
-    // axios
-    //   .get("http://localhost:8000/groupme/users")
-    //   .then(response => {
-    //     console.log(response.data);
-    //     this.setState({ movies: response.data.movies });
-    //   })
-    //   .catch(e => console.log(e));
-  }
-
   youtube_parser(url) {
     var regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
     var match = url.match(regExp);
@@ -47,8 +37,7 @@ export default class Movie extends Component {
   }
 
   setAsBeingEdited(movieId) {
-    let vote = this.state.vote;
-    vote = this.props.user.votes
+    let vote = this.props.user.votes
       ? this.props.user.votes[movieId] > -1
         ? this.props.user.votes[movieId]
         : 50
@@ -84,50 +73,33 @@ export default class Movie extends Component {
   }
 
   generateReleaseText(releaseDateUnix) {
-    const releaseDate = moment.unix(releaseDateUnix).utc();
+    console.log("--------------------");
+    const releaseDate = moment.unix(releaseDateUnix);
+    const releaseUTC = releaseDate.utc();
     const cutoffDate = moment.unix(this.props.moviePredictionCutoffDate).utc();
 
-    // console.log("================");
-    // console.log(
-    //   "CURRENT",
-    //   moment.utc().format("dddd, MMMM Do YYYY, h:mm:ss a Z")
-    // );
-    // console.log(
-    //   "+14",
-    //   moment
-    //     .utc()
-    //     .add(14, "days")
-    //     .format("dddd, MMMM Do YYYY, h:mm:ss a Z")
-    // );
-    // console.log("CUTOFF", cutoffDate.format("dddd, MMMM Do YYYY, h:mm:ss a Z"));
-    // console.log(
-    //   "RELEASE",
-    //   releaseDate.format("dddd, MMMM Do YYYY, h:mm:ss a Z")
-    // );
-    //
+    console.log(releaseUTC.format("dddd, MMMM Do YYYY, h:mm:ss a Z"));
+    console.log(cutoffDate.format("dddd, MMMM Do YYYY, h:mm:ss a Z"));
+    console.log("PAST?", releaseDate.isBefore(cutoffDate));
+
     const timeUnitsUntilCutoff = unit => {
-      return cutoffDate.diff(
-        moment
-          .utc()
-          .add(14, "days")
-          .utc(),
-        unit
-      );
+      return cutoffDate.diff(moment.utc().add(14, "days"), unit);
     };
 
     const daysUntilCutoff = releaseDate.diff(cutoffDate, "days");
+    const hoursUntilCutoff = timeUnitsUntilCutoff("hours");
+    const minutesUntilCutoff = timeUnitsUntilCutoff("minutes");
+    console.log("Days", daysUntilCutoff);
+    console.log("Hours", hoursUntilCutoff);
+    console.log("Min", hoursUntilCutoff);
 
     if (daysUntilCutoff > 0) {
       return `${daysUntilCutoff} day${daysUntilCutoff === 1 ? "" : "s"}`;
     }
 
-    const hoursUntilCutoff = timeUnitsUntilCutoff("hours");
-
     if (hoursUntilCutoff > 0) {
       return `${hoursUntilCutoff} hour${hoursUntilCutoff === 1 ? "" : "s"}`;
     }
-
-    const minutesUntilCutoff = timeUnitsUntilCutoff("minutes");
 
     if (minutesUntilCutoff > 0) {
       return `${Math.round(minutesUntilCutoff)} minute${

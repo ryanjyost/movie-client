@@ -170,6 +170,8 @@ class PastPredictions extends Component {
           }}
         >
           <Select
+            inputProps={{ readOnly: true }}
+            isSearchable={false}
             options={this.state.seasonOptions}
             value={this.state.selectedSeason || { label: "", value: null }}
             onChange={option => this.handleSelectSeason(option)}
@@ -178,6 +180,8 @@ class PastPredictions extends Component {
           {this.props.user &&
             this.props.user.groups.length > 1 && (
               <Select
+                inputProps={{ readOnly: true }}
+                isSearchable={false}
                 options={options}
                 value={selectedGroup || { label: "", value: null }}
                 onChange={option => this.handleSelect(option)}

@@ -61,8 +61,7 @@ const Rules = ({ styles }) => {
 
         <p style={textStyle}>
           <strong>Predictions are locked-in</strong> exactly two weeks before
-          the release date of the movie, or when the movie gets more than 5
-          reviews. Whichever comes first.
+          the release date of the movie.
         </p>
 
         <p style={textStyle}>

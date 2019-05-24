@@ -141,6 +141,8 @@ export default class Rankings extends Component {
                   }}
                 >
                   <Select
+                    inputProps={{ readOnly: true }}
+                    isSearchable={false}
                     options={options}
                     value={selectedGroup || { label: "", value: null }}
                     onChange={option => this.handleSelect(option)}

@@ -201,6 +201,8 @@ export default class Seasons extends Component {
             {/*/>*/}
             {/*<div style={{ height: 10 }} />*/}
             <Select
+              inputProps={{ readOnly: true }}
+              isSearchable={false}
               options={options}
               value={selectedGroup || { label: "", value: null }}
               onChange={option => this.handleSelectGroup(option)}
