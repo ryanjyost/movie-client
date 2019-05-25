@@ -124,6 +124,7 @@ export default class Seasons extends Component {
 
   createGroupAndSeasonData(groupInfo, seasons) {
     let data = {};
+    console.log(seasons);
 
     for (let season of seasons) {
       let winners = season.winnerMap[groupInfo._id];

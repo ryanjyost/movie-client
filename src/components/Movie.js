@@ -437,13 +437,15 @@ export default class Movie extends Component {
                 {rightNumber}
               </div>
             </div>
-            <Line
-              percent={prediction}
-              strokeWidth="2"
-              strokeColor={strokeColor}
-              trailWidth={0}
-              trailColor={styles.black(0.05)}
-            />
+            {!didNotPredict && (
+              <Line
+                percent={prediction}
+                strokeWidth="2"
+                strokeColor={strokeColor}
+                trailWidth={0}
+                trailColor={styles.black(0.05)}
+              />
+            )}
           </div>
         );
       };

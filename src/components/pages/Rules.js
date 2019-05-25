@@ -55,8 +55,8 @@ const Rules = ({ styles }) => {
         </p>
 
         <p style={textStyle}>
-          <strong>Seasons are 10 movies long.</strong>Whoever has the lowest
-          average MM Metric for the 10 movies wins the season.
+          <strong>Seasons are 5 movies long.</strong>Whoever has the lowest
+          average MM Metric for the 5 movies wins the season.
         </p>
 
         <p style={textStyle}>
@@ -66,8 +66,8 @@ const Rules = ({ styles }) => {
 
         <p style={textStyle}>
           <strong>If you forget to predict a movie</strong> before the lock-in
-          deadline, you get a penalty... 110% of the worst MM Metric in your
-          group.
+          deadline, you get a penalty... 110% of the worst MM Metric of all
+          players for that movie.
         </p>
 
         <div style={textStyle}>
