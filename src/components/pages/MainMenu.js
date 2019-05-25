@@ -113,6 +113,9 @@ class MainMenu extends Component {
           <Link to={"/privacy"} style={btnStyle} className={"hoverBtn"}>
             Privacy Policy
           </Link>
+          <Link to={"/landing"} style={btnStyle} className={"hoverBtn"}>
+            Landing Page
+          </Link>
           <a
             href={"mailto:ryanjyost@gmail.com"}
             style={btnStyle}

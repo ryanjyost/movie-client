@@ -107,7 +107,13 @@ class Home extends Component {
 
           <div className="main">
             <div id={"left"}>
-              <h2 style={{ color: styles.white(0.95), fontWeight: "bold" }}>
+              <h2
+                style={{
+                  color: styles.white(0.9),
+                  fontWeight: "bold",
+                  fontSize: styles.isWide ? 36 : 26
+                }}
+              >
                 Predict{" "}
                 <a
                   target={"_blank"}
@@ -117,7 +123,7 @@ class Home extends Component {
                   Rotten Tomatoes
                 </a>
                 <br />
-                scores with friends
+                scores against your friends
               </h2>
               <a
                 style={{
@@ -128,7 +134,7 @@ class Home extends Component {
                   padding: "8px 40px",
                   textDecoration: "none",
                   borderRadius: 3,
-                  fontSize: 16,
+                  fontSize: 20,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center"
@@ -136,7 +142,7 @@ class Home extends Component {
                 className={"hoverBtn"}
                 href={process.env.REACT_APP_GROUPME_AUTH || url}
               >
-                Start Playing via GroupMe
+                Start Playing
                 {/*<span style={{ marginLeft: 10, fontSize: 20 }}>&rarr;</span>*/}
               </a>
               <div
@@ -151,7 +157,7 @@ class Home extends Component {
                   style={{ color: styles.white(0.5) }}
                   href="https://www.rottentomatoes.com/"
                 >
-                  Rotten Tomatoes
+                  Rotten Tomatoes®
                 </a>
               </div>
             </div>
@@ -162,7 +168,6 @@ class Home extends Component {
                 <div className="sleep" />
                 <div className="volume" />
                 <div className="camera" />
-                {/*<div className="sensor" />*/}
                 <div className="speaker" />
                 <div className="screen">
                   <img src="preview.jpeg" width="100%" />

@@ -451,13 +451,18 @@ class App extends Component {
           <Route
             path="/"
             exact
-            render={props => (
-              <Home
-                user={user}
-                updateUser={user => this.updateUser(user)}
-                styles={styles}
-              />
-            )}
+            render={props => {
+              if (user) {
+                return <Redirect to={"/upcoming"} />;
+              }
+              return (
+                <Home
+                  user={user}
+                  updateUser={user => this.updateUser(user)}
+                  styles={styles}
+                />
+              );
+            }}
           />
 
           {/* Main Menu */}
@@ -639,12 +644,24 @@ class App extends Component {
               }
             }}
           />
+
+          {/* Explicit landing */}
+          <Route
+            path="/landing"
+            exact
+            render={props => (
+              <Home
+                user={user}
+                updateUser={user => this.updateUser(user)}
+                styles={styles}
+              />
+            )}
+          />
           <Route render={props => <Redirect to={"/"} />} />
         </Switch>
         {isApp ? renderAppFooter() : null}
 
         {/* Add to Homescreen*/}
-        {renderAddToHomeScreen()}
       </div>
     );
   }
