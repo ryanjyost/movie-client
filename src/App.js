@@ -85,6 +85,8 @@ class App extends Component {
             Storage.set("userId", response.data.user._id);
           }
 
+          console.log(response.data.user);
+
           this.setState({
             user: response.data.user,
             didFetchUser: true
@@ -434,6 +436,7 @@ class App extends Component {
     if (!this.state.didFetchUser) {
       return <LoadingScreen styles={styles} />;
     }
+
     return (
       <div
         style={{
@@ -452,7 +455,7 @@ class App extends Component {
             path="/"
             exact
             render={props => {
-              if (user) {
+              if (user && user.groups.length) {
                 return <Redirect to={"/upcoming"} />;
               }
               return (

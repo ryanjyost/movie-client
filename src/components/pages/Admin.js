@@ -146,12 +146,13 @@ class Admin extends Component {
   }
 
   render() {
-    const renderInput = key => {
+    const renderInput = (key, disabled) => {
       return (
         <div style={{ width: "100%" }}>
           <FormGroup>
             <ControlLabel>{key}</ControlLabel>
             <FormControl
+              disabled={disabled}
               type="text"
               value={this.state[key]}
               placeholder={`Enter ${key}`}
@@ -257,7 +258,7 @@ class Admin extends Component {
           </div>
           {renderInput("trailer")}
           {renderInput("rtLink")}
-          {renderInput("rtScore")}
+          {renderInput("rtScore", !this.state.isClosed)}
           <Checkbox
             checked={this.state.isClosed !== 0}
             onChange={e => {
