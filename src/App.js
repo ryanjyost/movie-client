@@ -181,7 +181,7 @@ class App extends Component {
 
     const menuItems = [
       {
-        link: "/seasons",
+        link: "/current",
         label: "Leaderboard",
         isActive:
           ["/seasons", "/rankings", "/current"].indexOf(`${pathname}`) > -1
@@ -346,8 +346,8 @@ class App extends Component {
           { link: "/past", title: "Past" }
         ],
         [
-          { link: "/current", title: "Current Season" },
           { link: "/seasons", title: "Past Seasons" },
+          { link: "/current", title: "Current Season" },
           { link: "/rankings", title: "Overall Rankings" }
         ]
       ];

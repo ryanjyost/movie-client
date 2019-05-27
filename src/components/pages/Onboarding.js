@@ -20,7 +20,7 @@ class Onboarding extends Component {
 
   componentDidMount() {
     Storage.remove("creatingGroup");
-    if (!this.props.user._id) {
+    if (this.props.user && !this.props.user._id) {
       axios
         .post(
           `${process.env.REACT_APP_API_URL ||
@@ -144,7 +144,9 @@ class Onboarding extends Component {
       );
     };
 
-    if (this.state.createdGroup) {
+    if (!this.props.user) {
+      return <Redirect to={"/"} />;
+    } else if (this.state.createdGroup) {
       return <Redirect to={"/rules"} />;
     } else if (!this.props.user.accessToken) {
       return <Redirect to={"/"} />;
