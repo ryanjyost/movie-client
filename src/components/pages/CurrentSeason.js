@@ -126,7 +126,6 @@ export default class CurrentSeason extends Component {
     const options = this.props.user.groups.map(group => {
       return { value: group._id, label: this.makeLabel(group) };
     });
-    options.push({ value: 0, label: "ALL MOVIE MEDIUM PLAYERS" });
 
     const seasonIsOver = seasonInfo
       ? seasonInfo.length === seasonInfo.movies.length
@@ -295,7 +294,7 @@ export default class CurrentSeason extends Component {
                       }}
                     >
                       <span style={{ fontSize: 20 }}>
-                        {(seasonIsOver && emojiMap[i]) || ""}
+                        {(seasonIsOver && emojiMap[member.place - 1]) || ""}
                       </span>
                       {getNameAbbr(member.name)}
                     </div>
