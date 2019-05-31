@@ -73,14 +73,15 @@ export default class Movie extends Component {
   }
 
   generateReleaseText(releaseDateUnix) {
-    console.log("--------------------");
+    // console.log("--------------------");
+    // console.log("Title", this.props.movie.title);
     const releaseDate = moment.unix(releaseDateUnix);
     const releaseUTC = releaseDate.utc();
     const cutoffDate = moment.unix(this.props.moviePredictionCutoffDate).utc();
 
-    console.log(releaseUTC.format("dddd, MMMM Do YYYY, h:mm:ss a Z"));
-    console.log(cutoffDate.format("dddd, MMMM Do YYYY, h:mm:ss a Z"));
-    console.log("PAST?", releaseDate.isBefore(cutoffDate));
+    // console.log(releaseUTC.format("dddd, MMMM Do YYYY, h:mm:ss a Z"));
+    // console.log(cutoffDate.format("dddd, MMMM Do YYYY, h:mm:ss a Z"));
+    // console.log("PAST?", releaseDate.isBefore(cutoffDate));
 
     const timeUnitsUntilCutoff = unit => {
       return cutoffDate.diff(moment.utc().add(14, "days"), unit);
@@ -89,9 +90,13 @@ export default class Movie extends Component {
     const daysUntilCutoff = releaseDate.diff(cutoffDate, "days");
     const hoursUntilCutoff = timeUnitsUntilCutoff("hours");
     const minutesUntilCutoff = timeUnitsUntilCutoff("minutes");
-    console.log("Days", daysUntilCutoff);
-    console.log("Hours", hoursUntilCutoff);
-    console.log("Min", hoursUntilCutoff);
+    // console.log("Days", daysUntilCutoff);
+    // console.log("Hours", hoursUntilCutoff);
+    // console.log("Min", hoursUntilCutoff);
+
+    if (releaseDate.isBefore(cutoffDate)) {
+      return `1 minute`;
+    }
 
     if (daysUntilCutoff > 0) {
       return `${daysUntilCutoff} day${daysUntilCutoff === 1 ? "" : "s"}`;
