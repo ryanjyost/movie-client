@@ -3,7 +3,7 @@ import moment from "moment-timezone";
 import YouTube from "react-youtube";
 import { Button, FormGroup, FormControl } from "react-bootstrap";
 import axios from "axios/index";
-import { sortArrayByProperty } from "../lib/helpers";
+import { sortArrayByProperty, generateReleaseText } from "../lib/helpers";
 import { Line } from "rc-progress";
 
 export default class Movie extends Component {
@@ -52,7 +52,7 @@ export default class Movie extends Component {
     axios
       .post(
         `${process.env.REACT_APP_API_URL ||
-          "https://predict-movies-prod.herokuapp.com"}/movies/predict/${movieId}`,
+          "https://predict-movies-prod.herokuapp.com"}/users/predict/${movieId}`,
         {
           userId: this.props.user._id,
           prediction: this.state.vote
@@ -72,49 +72,6 @@ export default class Movie extends Component {
       });
   }
 
-  generateReleaseText(releaseDateUnix) {
-    // console.log("--------------------");
-    // console.log("Title", this.props.movie.title);
-    const releaseDate = moment.unix(releaseDateUnix);
-    const releaseUTC = releaseDate.utc();
-    const cutoffDate = moment.unix(this.props.moviePredictionCutoffDate).utc();
-
-    // console.log(releaseUTC.format("dddd, MMMM Do YYYY, h:mm:ss a Z"));
-    // console.log(cutoffDate.format("dddd, MMMM Do YYYY, h:mm:ss a Z"));
-    // console.log("PAST?", releaseDate.isBefore(cutoffDate));
-
-    const timeUnitsUntilCutoff = unit => {
-      return cutoffDate.diff(moment.utc().add(14, "days"), unit);
-    };
-
-    const daysUntilCutoff = releaseDate.diff(cutoffDate, "days");
-    const hoursUntilCutoff = timeUnitsUntilCutoff("hours");
-    const minutesUntilCutoff = timeUnitsUntilCutoff("minutes");
-    // console.log("Days", daysUntilCutoff);
-    // console.log("Hours", hoursUntilCutoff);
-    // console.log("Min", hoursUntilCutoff);
-
-    if (releaseDate.isBefore(cutoffDate)) {
-      return `1 minute`;
-    }
-
-    if (daysUntilCutoff > 0) {
-      return `${daysUntilCutoff} day${daysUntilCutoff === 1 ? "" : "s"}`;
-    }
-
-    if (hoursUntilCutoff > 0) {
-      return `${hoursUntilCutoff} hour${hoursUntilCutoff === 1 ? "" : "s"}`;
-    }
-
-    if (minutesUntilCutoff > 0) {
-      return `${Math.round(minutesUntilCutoff)} minute${
-        minutesUntilCutoff === 1 ? "" : "s"
-      }`;
-    }
-
-    return `1 minute`;
-  }
-
   render() {
     const {
       movie,
@@ -123,7 +80,7 @@ export default class Movie extends Component {
       allowEdit,
       isUpcoming,
       user,
-      moviePredictionCutOffDate,
+      moviePredictionCutoffDate,
       isPurgatory,
       isPast
     } = this.props;
@@ -131,7 +88,7 @@ export default class Movie extends Component {
 
     const releaseCountdownText =
       !isPast && !isPurgatory
-        ? this.generateReleaseText(movie.releaseDate)
+        ? generateReleaseText(movie.releaseDate, moviePredictionCutoffDate)
         : "";
 
     const renderVideo = video => {

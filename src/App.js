@@ -85,8 +85,6 @@ class App extends Component {
             Storage.set("userId", response.data.user._id);
           }
 
-          console.log(response.data.user);
-
           this.setState({
             user: response.data.user,
             didFetchUser: true
@@ -268,7 +266,24 @@ class App extends Component {
             height: styles.appHeaderHeight
           }}
         >
-          <div style={{ flex: 1, color: "transparent" }}>h</div>
+          <div style={{ flex: 1, color: "transparent" }}>
+            <a
+              href={process.env.REACT_APP_GROUPME_AUTH}
+              onClick={() => {
+                Storage.set("creatingGroup", true);
+              }}
+              style={{
+                marginLeft: 15,
+                color: styles.white(0.9),
+                fontSize: 11,
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer"
+              }}
+            >
+              <span style={{ fontSize: 20, paddingRight: 3 }}>+</span> New Group
+            </a>
+          </div>
           <Link
             to={"/"}
             style={{
@@ -278,11 +293,11 @@ class App extends Component {
               color: styles.white(),
               fontSize: 16,
               fontWeight: "bold",
-              flex: 3,
+              flex: styles.isWide ? 2 : 1,
               textDecoration: "none"
             }}
           >
-            Movie Medium
+            {styles.isWide ? "Movie Medium" : "MM"}
           </Link>
           <div
             style={{

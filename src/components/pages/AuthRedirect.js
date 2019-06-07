@@ -10,7 +10,8 @@ export default class AuthRedirect extends Component {
     this.state = {
       redirectToHome: false,
       redirectToOnboarding: false,
-      redirectToApp: false
+      redirectToApp: false,
+      redirectToRules: false
     };
   }
 
@@ -30,6 +31,8 @@ export default class AuthRedirect extends Component {
           this.props.updateUser({ ...response.data.user, ...{ accessToken } });
           if (Storage.get("creatingGroup")) {
             this.setState({ redirectToOnboarding: true });
+          } else if (response.data.user.isNew) {
+            this.setState({ redirectToRules: true });
           } else if (response.data.user.groups.length) {
             this.setState({ redirectToApp: true });
           } else if (!response.data.user.groups.length) {
@@ -47,16 +50,25 @@ export default class AuthRedirect extends Component {
 
   render() {
     const { styles } = this.props;
-    const { redirectToHome, redirectToOnboarding, redirectToApp } = this.state;
+    const {
+      redirectToHome,
+      redirectToOnboarding,
+      redirectToApp,
+      redirectToRules
+    } = this.state;
 
     if (redirectToHome) {
       return <Redirect to={"/"} />;
-    } else if (redirectToOnboarding) {
-      return <Redirect to={"/create-group"} />;
-    } else if (redirectToApp) {
-      return <Redirect to={"/upcoming"} />;
-    } else {
-      return <LoadingScreen styles={styles} message={"Logging you in..."} />;
     }
+    if (redirectToRules) {
+      return <Redirect to={"/rules"} />;
+    }
+    if (redirectToOnboarding) {
+      return <Redirect to={"/create-group"} />;
+    }
+    if (redirectToApp) {
+      return <Redirect to={"/upcoming"} />;
+    }
+    return <LoadingScreen styles={styles} message={"Logging you in..."} />;
   }
 }
