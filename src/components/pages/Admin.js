@@ -43,7 +43,10 @@ class Admin extends Component {
       messageToGroups: "",
 
       httpLogs: [],
-      otherLogs: []
+      otherLogs: [],
+      feedback: [],
+      responding: {},
+      responseText: ""
     };
 
     //"https://predict-movies-prod.herokuapp.com"/
@@ -81,6 +84,19 @@ class Admin extends Component {
       .catch(e => console.log(e));
   }
 
+  getFeedback() {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL ||
+          "https://predict-movies-prod.herokuapp.com"}/admin/feedback`
+      )
+      .then(response => {
+        console.log(response.data.feedback);
+        this.setState({ feedback: response.data.feedback });
+      })
+      .catch(e => console.log(e));
+  }
+
   componentDidMount() {
     axios
       .get(
@@ -95,6 +111,8 @@ class Admin extends Component {
         });
       })
       .catch(e => console.log(e));
+
+    this.getFeedback();
   }
 
   prepEdit(movie) {
@@ -191,6 +209,37 @@ class Admin extends Component {
         .then(response => {
           this.setState({
             messageToGroups: ""
+          });
+        })
+        .catch(e => console.log(e));
+    }
+  }
+
+  sendFeedbackResponse(feedback) {
+    if (window.confirm("Confirm")) {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_URL ||
+            "https://predict-movies-prod.herokuapp.com"}/admin/feedback/${
+            feedback._id
+          }/respond`,
+          {
+            message: this.state.responseText
+          }
+        )
+        .then(response => {
+          const updatedFeedback = this.state.feedback.map(item => {
+            if (item._id === response.data.response._id) {
+              return response.data.response;
+            } else {
+              return item;
+            }
+          });
+
+          this.setState({
+            responding: {},
+            responseText: "",
+            feedback: updatedFeedback
           });
         })
         .catch(e => console.log(e));
@@ -616,6 +665,157 @@ class Admin extends Component {
       );
     };
 
+    const renderFeedback = () => {
+      const renderRespondToFeedbackForm = feedback => {
+        return (
+          <div
+            style={{
+              width: "100%",
+              padding: 20
+            }}
+          >
+            <div style={{ width: "100%", padding: "10px 0px" }}>
+              <textarea
+                style={{
+                  width: "100%",
+                  border: "1px solid #d8d8d8",
+                  borderRadius: 3
+                }}
+                value={this.state.responseText}
+                onChange={e => this.setState({ responseText: e.target.value })}
+                rows={5}
+              />
+            </div>
+            <Button
+              disabled={!this.state.responseText.length}
+              bsStyle="primary"
+              onClick={() => this.sendFeedbackResponse(feedback)}
+            >
+              Send
+            </Button>
+          </div>
+        );
+      };
+
+      const columns = [
+        {
+          Header: "Message",
+          id: "message",
+          style: { fontSize: 10, display: "flex", alignItems: "center" },
+          accessor: "message",
+          width: 200
+        },
+        {
+          Header: "Members",
+          id: "members",
+          style: { fontSize: 10, display: "flex", alignItems: "center" },
+          accessor: row => {
+            const members = [...row.group.members];
+            let text = "";
+            for (let member of members) {
+              if (!member.isMM) {
+                text = text + member.name + ", ";
+              }
+            }
+
+            return text;
+          },
+          width: 200,
+          Cell: row => {
+            return row.value;
+          }
+        },
+        {
+          Header: "Created",
+          id: "timestamp",
+          width: 140,
+          style: { fontSize: 10, display: "flex", alignItems: "center" },
+          accessor: row => row.payload.created_at,
+          Cell: row => moment.unix(row.value).format("MM/DD/YYYY, h:mm: a Z")
+        },
+        {
+          Header: "Response",
+          accessor: "respond",
+          width: 300,
+          Cell: row => {
+            if (row.original.response) {
+              return (
+                <span style={{ fontSize: 10 }}>{row.original.response}</span>
+              );
+            } else {
+              return (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <a
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      if (this.state.responding[row.viewIndex]) {
+                        this.setState({ responding: {} });
+                      } else {
+                        this.setState({
+                          responding: { [row.viewIndex]: true }
+                        });
+                      }
+                    }}
+                  >
+                    Respond
+                  </a>
+                </div>
+              );
+            }
+          }
+        },
+        {
+          Header: "Go to Chat",
+          accessor: "chatLink",
+          id: "chatLink",
+          filterable: false,
+          sortable: false,
+          width: 100,
+          Cell: row => {
+            return (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <a
+                  target={"_blank"}
+                  style={{ cursor: "pointer" }}
+                  href={`https://app.groupme.com/chats/${
+                    row.original.payload.group_id
+                  }`}
+                >
+                  Go to chat
+                </a>
+              </div>
+            );
+          }
+        }
+      ];
+
+      return (
+        <ReactTable
+          style={{ width: "100%" }}
+          data={this.state.feedback}
+          columns={columns}
+          defaultPageSize={100}
+          filterable
+          expanded={this.state.responding}
+          defaultFilterMethod={defaultFilterMethod}
+          className="-highlight"
+          SubComponent={row => {
+            return renderRespondToFeedbackForm(row.original);
+          }}
+          getTrProps={(thing, row) => {
+            if (!row) return {};
+            return {
+              style: {
+                backgroundColor: row.original.response
+                  ? null
+                  : "rgba(94, 225, 55, 0.1)"
+              }
+            };
+          }}
+        />
+      );
+    };
+
     const renderEnv = () => {
       if (
         process.env.REACT_APP_API_URL ===
@@ -665,31 +865,45 @@ class Admin extends Component {
         </div>
         <Tabs
           onSelect={key => {
-            if ((key === 5 || key === 4) && !this.state.httpLogs.length) {
+            if (
+              (key === "logs" || key === "httpLogs") &&
+              !this.state.httpLogs.length
+            ) {
               this.getAdminLogs();
+            }
+
+            if (key === "feedback") {
+              this.getFeedback();
             }
 
             return key;
           }}
-          defaultActiveKey={1}
+          defaultActiveKey={"feedback"}
           id={"tabs"}
           transition={"false"}
           mountOnEnter={true}
           style={{ width: "100%", maxWidth: 1200, marginTop: 20 }}
         >
-          <Tab eventKey={1} title="Movies" style={tabStyle}>
+          <Tab eventKey={"movies"} title="Movies" style={tabStyle}>
             {renderTable()}
           </Tab>
-          <Tab eventKey={2} title="Add Movie" style={tabStyle}>
+          <Tab eventKey={"addMovie"} title="Add Movie" style={tabStyle}>
             {renderAddForm()}
           </Tab>
-          <Tab eventKey={3} title="Message Groups" style={tabStyle}>
+          <Tab eventKey={"feedback"} title="Feedback" style={tabStyle}>
+            {renderFeedback()}
+          </Tab>
+          <Tab
+            eventKey={"groupMessage"}
+            title="Message Groups"
+            style={tabStyle}
+          >
             {groupMessage()}
           </Tab>
-          <Tab eventKey={4} title="Logs" style={tabStyle}>
+          <Tab eventKey={"logs"} title="Logs" style={tabStyle}>
             {renderLogs()}
           </Tab>
-          <Tab eventKey={5} title="HTTP Logs" style={tabStyle}>
+          <Tab eventKey={"httpLogs"} title="HTTP Logs" style={tabStyle}>
             {renderHttpLogs()}
           </Tab>
         </Tabs>
