@@ -703,28 +703,28 @@ class Admin extends Component {
           id: "message",
           style: { fontSize: 10, display: "flex", alignItems: "center" },
           accessor: "message",
-          width: 200
+          width: 300
         },
-        {
-          Header: "Members",
-          id: "members",
-          style: { fontSize: 10, display: "flex", alignItems: "center" },
-          accessor: row => {
-            const members = [...row.group.members];
-            let text = "";
-            for (let member of members) {
-              if (!member.isMM) {
-                text = text + member.name + ", ";
-              }
-            }
-
-            return text;
-          },
-          width: 200,
-          Cell: row => {
-            return row.value;
-          }
-        },
+        // {
+        //   Header: "Members",
+        //   id: "members",
+        //   style: { fontSize: 10, display: "flex", alignItems: "center" },
+        //   accessor: row => {
+        //     const members = [...row.group.members];
+        //     let text = "";
+        //     for (let member of members) {
+        //       if (!member.isMM) {
+        //         text = text + member.name + ", ";
+        //       }
+        //     }
+        //
+        //     return text;
+        //   },
+        //   width: 200,
+        //   Cell: row => {
+        //     return row.value;
+        //   }
+        // },
         {
           Header: "Created",
           id: "timestamp",
