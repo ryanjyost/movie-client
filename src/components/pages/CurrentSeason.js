@@ -245,7 +245,7 @@ export default class CurrentSeason extends Component {
                   borderRadius: 3
                 }}
               >
-                <h5>Player</h5> <h5>Average MM Metric</h5>
+                <h5>Player</h5> <h5>Season Points</h5>
               </div>
             </div>
             {this.state.rankings.map((member, i) => {
@@ -312,32 +312,24 @@ export default class CurrentSeason extends Component {
                         fontSize: member.prediction < 0 ? 12 : 16
                       }}
                     >
-                      {member.notInSeason ? (
-                        <strong>N/A</strong>
-                      ) : (
-                        <span>
-                          <strong>
-                            {member.moviesInCalc < 1
-                              ? "None yet"
-                              : member.avgDiff}
-                            {member.moviesInCalc < 1 ? "" : "%"}
-                          </strong>
-                        </span>
-                      )}
-                      <span style={{ fontSize: 10, opacity: 0.8 }}>
-                        {member.notInSeason
-                          ? "Player will be in next season"
-                          : `based on ${member.moviesInCalc} movies`}
+                      <span>
+                        <strong>{`${member.points}`}</strong>
                       </span>
+
+                      {/*<span style={{ fontSize: 10, opacity: 0.8 }}>*/}
+                      {/*{member.notInSeason*/}
+                      {/*? "Player will be in next season"*/}
+                      {/*: `based on ${member.moviesInCalc} movies`}*/}
+                      {/*</span>*/}
                     </div>
                   </div>
-                  <Line
-                    percent={member.avgDiff}
-                    strokeWidth="2"
-                    strokeColor={strokeColor}
-                    trailWidth={0}
-                    trailColor={styles.black(0.05)}
-                  />
+                  {/*<Line*/}
+                  {/*percent={member.avgDiff}*/}
+                  {/*strokeWidth="2"*/}
+                  {/*strokeColor={strokeColor}*/}
+                  {/*trailWidth={0}*/}
+                  {/*trailColor={styles.black(0.05)}*/}
+                  {/*/>*/}
                 </div>
               );
             })}
