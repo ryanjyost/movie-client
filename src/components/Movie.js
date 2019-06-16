@@ -347,11 +347,11 @@ export default class Movie extends Component {
                         fontWeight: "normal"
                       }}
                     >
-                      {didNotPredict ? "got a" : isUser ? "were" : "was"}
+                      {didNotPredict ? "" : isUser ? "were" : "was"}
                     </span>
                   )}
                 {/*{!isRT && isPast && <span>{member.diff < 0 ? "-" : "+"}</span>}*/}
-                {!isRT && isPast && `${member.absDiff}%`}
+                {!isRT && isPast && !didNotPredict && `${member.absDiff}%`}
                 {!isRT &&
                   isPast && (
                     <span
@@ -362,7 +362,7 @@ export default class Movie extends Component {
                         fontWeight: "normal"
                       }}
                     >
-                      {didNotPredict ? "penalty" : "off"}
+                      {didNotPredict ? "" : "off"}
                     </span>
                   )}
               </div>
