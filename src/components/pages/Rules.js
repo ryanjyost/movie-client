@@ -37,11 +37,10 @@ const Rules = ({ styles }) => {
         </p>
 
         <p style={textStyle}>
-          <strong>How to win:</strong> Have the lowest average{" "}
+          <strong>For each movie that you predict,</strong> you'll get a{" "}
           <strong>
             <i>Movie Medium Metric</i>
-          </strong>{" "}
-          over time.
+          </strong>.
         </p>
 
         <p style={textStyle}>
@@ -55,19 +54,19 @@ const Rules = ({ styles }) => {
         </p>
 
         <p style={textStyle}>
-          <strong>Seasons are 5 movies long.</strong> Whoever has the lowest
-          average MM Metric for the 5 movies wins the season.
+          <strong>The players in your group with the best MM Metrics</strong>{" "}
+          for a movie get some points. 1st gets 30 points, 2nd gets 20 points,
+          3rd gets 10 points.
+        </p>
+
+        <p style={textStyle}>
+          <strong>Seasons are 5 movies long.</strong> Whoever has the most
+          points after 5 movies wins the season.
         </p>
 
         <p style={textStyle}>
           <strong>Predictions are locked-in</strong> exactly two weeks before
           the release date of the movie.
-        </p>
-
-        <p style={textStyle}>
-          <strong>If you forget to predict a movie</strong> before the lock-in
-          deadline, you get a penalty... 110% of the worst MM Metric of all
-          players for that movie.
         </p>
 
         <div style={textStyle}>
@@ -97,7 +96,7 @@ const Rules = ({ styles }) => {
           </strong>
         </p>
         <p style={textStyle}>
-          <strong>Send a direct message to Movie Medium in GroupMe</strong> with
+          <strong>Mention Movie Medium (@Movie Medium) in GroupMe</strong> with
           any questions, ideas, bugs, stock recommendations, etc.
         </p>
       </div>
