@@ -16,8 +16,8 @@ const Rules = ({ styles }) => {
         flexDirection: "column",
         alignItems: "center",
         width: "100%",
-        maxWidth: 500,
-        padding: "80px 0px",
+        maxWidth: 600,
+        padding: "50px 0px",
         margin: "auto"
       }}
     >
@@ -55,7 +55,7 @@ const Rules = ({ styles }) => {
         </p>
 
         <p style={textStyle}>
-          <strong>Seasons are 5 movies long.</strong>Whoever has the lowest
+          <strong>Seasons are 5 movies long.</strong> Whoever has the lowest
           average MM Metric for the 5 movies wins the season.
         </p>
 

@@ -59,7 +59,7 @@ class PastPredictions extends Component {
     axios
       .get(
         `${process.env.REACT_APP_API_URL ||
-          "https://predict-movies-prod.herokuapp.com"}/group_breakdowns/${groupId}/past`
+          "https://predict-movies-prod.herokuapp.com"}/groups/${groupId}/breakdowns/past`
       )
       .then(response => {
         this.setState({ predictionBreakdowns: response.data.breakdowns });

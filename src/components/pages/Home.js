@@ -170,7 +170,7 @@ class Home extends Component {
                 <div className="camera" />
                 <div className="speaker" />
                 <div className="screen">
-                  <img src="preview.jpeg" width="100%" />
+                  <img src="preview.png" width="100%" />
                 </div>
                 <div className="home" />
                 <div className="bottom-bar" />

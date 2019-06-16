@@ -84,7 +84,7 @@ class Upcoming extends Component {
     axios
       .post(
         `${process.env.REACT_APP_API_URL ||
-          "https://predict-movies-prod.herokuapp.com"}/movies/predict/${movieId}`,
+          "https://predict-movies-prod.herokuapp.com"}/users/predict/${movieId}`,
         {
           userId: this.props.user._id,
           prediction: this.state.moviesBeingEdited[movieId]

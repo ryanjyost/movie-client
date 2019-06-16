@@ -64,7 +64,7 @@ const TermsOfUse = ({ styles, history }) => {
   };
 
   return (
-    <div>
+    <div id={"howToPlay"}>
       {renderHeader()}
       <div
         style={{
