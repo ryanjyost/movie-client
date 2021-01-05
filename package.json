@@ -7,7 +7,7 @@
     "sw-precache": "^5.2.1"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-loader": "^8.0.4",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
